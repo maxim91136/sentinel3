@@ -85,8 +85,10 @@ def main():
         send("🛡️ <b>Sentinel3</b>: Testnachricht. Wenn du das liest, kommen Meldungen an."); return
 
     st = load_state()
-    if st.get("mode") == "normal" and not MANUAL and NOW.hour % 3 != 0:
-        print("Normalbetrieb, nächste volle Prüfung zur nächsten vollen 3-Stunden-Marke."); return
+    lf = st.get("last_full")
+    due = (not lf) or hrs(dt.datetime.fromisoformat(lf.replace("Z", "+00:00")), NOW) >= 2.8
+    if st.get("mode") == "normal" and not MANUAL and not due:
+        print("Normalbetrieb, letzte volle Prüfung", lf, "- nächste nach 3 Stunden."); return
 
     cfg = json.load(open("checks.json"))
     items = [("site", c) for c in cfg["sites"]] + [("fresh", c) for c in cfg["fresh"]] + \
@@ -106,7 +108,9 @@ def main():
     if gone:
         lines = [f"🟢 <b>{n}</b> wieder in Ordnung (Ausfall ca. {dur(hrs(dt.datetime.fromisoformat(old[n]['since'].replace('Z','+00:00')), NOW))})" for n in gone]
         msgs.append("🛡️ <b>Sentinel3: Entwarnung</b>\n\n" + "\n".join(lines) + ("\n\nAlles läuft, zurück auf alle 3 Stunden." if not fail else ""))
-    remind = [n for n in fail if n in old and hrs(dt.datetime.fromisoformat(old[n]["last_alert"].replace("Z", "+00:00")), NOW) >= REMIND_H]
+    loc_h = NOW.astimezone(ZoneInfo("Europe/Berlin")).hour
+    quiet = not (7 <= loc_h < 22)
+    remind = [] if quiet else [n for n in fail if n in old and hrs(dt.datetime.fromisoformat(old[n]["last_alert"].replace("Z", "+00:00")), NOW) >= REMIND_H]
     if remind:
         lines = [f"🟠 <b>{n}</b> weiterhin gestört seit {berlin(dt.datetime.fromisoformat(old[n]['since'].replace('Z','+00:00')))} Uhr: {fail[n][0]}" for n in remind]
         msgs.append("🛡️ <b>Sentinel3: Erinnerung</b>\n\n" + "\n".join(lines))
@@ -115,7 +119,13 @@ def main():
     for n, (det, ub) in fail.items():
         o = old.get(n, {})
         nf[n] = {"since": o.get("since", ts()), "last_alert": ts() if (n in new or n in remind) else o.get("last_alert", ts()), "detail": det}
-    new_state = {"mode": "problem" if fail else "normal", "failing": nf}
+    new_state = {"mode": "problem" if fail else "normal", "failing": nf, "last_full": ts(), "last_weekly": st.get("last_weekly")}
+    loc = NOW.astimezone(ZoneInfo("Europe/Berlin")); wk = f"{loc.isocalendar()[0]}-W{loc.isocalendar()[1]:02d}"
+    if loc.weekday() == 0 and loc.hour >= 7 and st.get("last_weekly") != wk and not MANUAL:
+        ok_n = len(res) - len(fail)
+        w = f"🛡️ <b>Sentinel3: Wochencheck</b>\n\nIch laufe. ✅ {ok_n} von {len(res)} in Ordnung"
+        if fail: w += "\n" + "\n".join(f"🔴 <b>{n}</b>: {d}" for n, (d, _) in fail.items())
+        msgs.append(w); new_state["last_weekly"] = wk
     if MANUAL and not msgs:
         ok_n = len(res) - len(fail)
         txt = f"🛡️ <b>Sentinel3: Manuelle Prüfung</b>\n\n✅ {ok_n} von {len(res)} in Ordnung"
