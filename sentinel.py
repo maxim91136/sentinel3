@@ -116,8 +116,12 @@ def main():
         o = old.get(n, {})
         nf[n] = {"since": o.get("since", ts()), "last_alert": ts() if (n in new or n in remind) else o.get("last_alert", ts()), "detail": det}
     new_state = {"mode": "problem" if fail else "normal", "failing": nf}
-    if MANUAL and not msgs and not fail:
-        msgs.append("🛡️ <b>Sentinel3</b>: Manuelle Prüfung, alles in Ordnung (" + str(len(res)) + " Prüfungen).")
+    if MANUAL and not msgs:
+        ok_n = len(res) - len(fail)
+        txt = f"🛡️ <b>Sentinel3: Manuelle Prüfung</b>\n\n✅ {ok_n} von {len(res)} in Ordnung"
+        if fail:
+            txt += "\n" + "\n".join(f"🔴 <b>{n}</b>: {d} (bekannt seit {berlin(dt.datetime.fromisoformat(old[n]['since'].replace('Z','+00:00')))} Uhr)" if n in old else f"🔴 <b>{n}</b>: {d}" for n, (d, _) in fail.items())
+        msgs.append(txt)
     for m in msgs: send(m)
     if new_state != st:
         json.dump(new_state, open(STATE_F, "w"), ensure_ascii=False, indent=1)
