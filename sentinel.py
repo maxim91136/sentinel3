@@ -7,7 +7,8 @@ from concurrent.futures import ThreadPoolExecutor
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 CHAT = os.environ.get("TELEGRAM_CHAT_ID", "")
 MODE = (sys.argv[1] if len(sys.argv) > 1 else "run").strip() or "run"
-MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
+# "tick" = Takt von außen (Cloudflare-Worker), verhält sich wie ein geplanter Lauf
+MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and MODE != "tick"
 UA = {"User-Agent": "Mozilla/5.0 (compatible; sentinel3/1.0; +https://github.com/maxim91136/sentinel3)"}
 NOW = dt.datetime.now(dt.timezone.utc)
 STATE_F = "state.json"
@@ -89,6 +90,8 @@ def main():
     due = (not lf) or hrs(dt.datetime.fromisoformat(lf.replace("Z", "+00:00")), NOW) >= 2.8
     if st.get("mode") == "normal" and not MANUAL and not due:
         print("Normalbetrieb, letzte volle Prüfung", lf, "- nächste nach 3 Stunden."); return
+    if not MANUAL and lf and hrs(dt.datetime.fromisoformat(lf.replace("Z", "+00:00")), NOW) < 0.33:
+        print("Letzte Prüfung vor weniger als 20 Minuten, übersprungen."); return
 
     cfg = json.load(open("checks.json"))
     items = [("site", c) for c in cfg["sites"]] + [("fresh", c) for c in cfg["fresh"]] + \

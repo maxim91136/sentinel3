@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "run (jetzt prüfen), test (Testnachricht), setup (Chat-IDs anzeigen)"
+        description: "run (jetzt prüfen), tick (Takt von außen), test (Testnachricht), setup (Chat-IDs anzeigen)"
         default: run
 permissions:
   contents: write
