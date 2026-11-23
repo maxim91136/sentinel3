@@ -1,0 +1,20 @@
+{
+ "mode": "problem",
+ "failing": {
+  "3Kings": {
+   "since": "2026-11-23T13:13Z",
+   "last_alert": "2026-11-23T13:13Z",
+   "detail": "200, 111 ms, erwarteter Inhalt fehlt"
+  },
+  "3Kings Datenstand": {
+   "since": "2026-11-23T13:13Z",
+   "last_alert": "2026-11-23T13:13Z",
+   "detail": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+  },
+  "Bitnodes": {
+   "since": "2026-11-23T13:13Z",
+   "last_alert": "2026-11-23T13:13Z",
+   "detail": "HTTP 521"
+  }
+ }
+}
