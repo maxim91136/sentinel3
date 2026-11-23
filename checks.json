@@ -1,0 +1,28 @@
+{
+ "sites": [
+  {"name": "3Kings", "url": "https://3kings.dev/", "expect": "3Kings"},
+  {"name": "Dreier Labs", "url": "https://dreierlabs.com/", "expect": "Dreier"},
+  {"name": "NotSoDeFi", "url": "https://notsodefi.com/", "expect": "NotSoDeFi"},
+  {"name": "NoSinglePoint", "url": "https://nosinglepoint.com/", "expect": "NoSinglePoint"},
+  {"name": "SatoshisGrid", "url": "https://satoshisgrid.com/", "expect": "SATOSHIS"},
+  {"name": "Bittensor-Labs", "url": "https://bittensor-labs.com/", "expect": "Bittensor"}
+ ],
+ "fresh": [
+  {"name": "3Kings Datenstand", "url": "https://3kings.dev/heartbeat.json", "field": "generated_at", "max_hours": 80, "used_by": ["3Kings"]}
+ ],
+ "status_pages": [
+  {"name": "GitHub", "url": "https://www.githubstatus.com/api/v2/status.json", "used_by": ["alle (Actions, Deploys)"]},
+  {"name": "Cloudflare", "url": "https://www.cloudflarestatus.com/api/v2/status.json", "used_by": ["alle (Hosting)"]}
+ ],
+ "deps": [
+  {"name": "Telegram Bot API", "url": "telegram:getMe", "used_by": ["3Kings", "Sentinel"]},
+  {"name": "Yahoo Finance", "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?range=1d&interval=1d", "used_by": ["3Kings"]},
+  {"name": "Coinbase", "url": "https://api.exchange.coinbase.com/products/BTC-USD/ticker", "used_by": ["3Kings"]},
+  {"name": "Binance Daten-API", "url": "https://data-api.binance.vision/api/v3/ping", "used_by": ["3Kings"]},
+  {"name": "FRED", "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd=2026-01-01", "used_by": ["3Kings"]},
+  {"name": "CoinGecko", "url": "https://api.coingecko.com/api/v3/ping", "used_by": ["Bittensor-Labs", "SatoshisGrid"]},
+  {"name": "mempool.space", "url": "https://mempool.space/api/blocks/tip/height", "used_by": ["SatoshisGrid", "NoSinglePoint"]},
+  {"name": "Tor Onionoo", "url": "https://onionoo.torproject.org/summary?limit=1", "used_by": ["NoSinglePoint"]},
+  {"name": "Bitnodes", "url": "https://bitnodes.io/api/v1/snapshots/?limit=1", "used_by": ["NoSinglePoint", "NotSoDeFi"]}
+ ]
+}
