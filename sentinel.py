@@ -18,7 +18,7 @@ def fetch(url, timeout=20):
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=timeout) as r:
         body = r.read(400_000)
-        return r.status, body, round((time.time() - t0) * 1000)
+        return r.status, body, round((time.time() - t0) * 1000), r.geturl()
 
 def tg(method, **kw):
     data = urllib.parse.urlencode(kw).encode() if kw else None
@@ -37,9 +37,9 @@ def once(kind, c):
     if kind == "dep" and c["url"] == "telegram:getMe":
         if not TOKEN: return True, "übersprungen (kein Token)"
         r = tg("getMe"); return bool(r.get("ok")), "Bot erreichbar" if r.get("ok") else str(r)
-    status, body, ms = fetch(c["url"])
+    status, body, ms, final = fetch(c["url"])
     if kind == "site":
-        ok = status == 200 and c["expect"].encode() in body
+        ok = status == 200 and (c["expect"].encode() in body or (c.get("or_access") and ("cloudflareaccess.com" in final or b"Cloudflare Access" in body)))
         return ok, f"{status}, {ms} ms" + ("" if ok else ", erwarteter Inhalt fehlt")
     if kind == "status":
         ind = json.loads(body)["status"]["indicator"]
