@@ -101,13 +101,16 @@ def main():
     old = st.get("failing", {})
     msgs = []
     new = [n for n in fail if n not in old]
-    gone = [n for n in old if n not in fail]
+    # Entwarnung erst nach zwei erfolgreichen Prüfungen in Folge (gegen Flackern)
+    recovering = {n: old[n].get("ok_streak", 0) + 1 for n in old if n not in fail}
+    gone = [n for n, k in recovering.items() if k >= 2]
+    hold = {n: k for n, k in recovering.items() if k < 2}
     if new:
         lines = [f"🔴 <b>{n}</b>: {fail[n][0]}\n   betrifft: {', '.join(fail[n][1])}" for n in new]
         msgs.append("🛡️ <b>Sentinel3: Problem</b>\n\n" + "\n".join(lines) + "\n\nIch prüfe ab jetzt stündlich.")
     if gone:
         lines = [f"🟢 <b>{n}</b> wieder in Ordnung (Ausfall ca. {dur(hrs(dt.datetime.fromisoformat(old[n]['since'].replace('Z','+00:00')), NOW))})" for n in gone]
-        msgs.append("🛡️ <b>Sentinel3: Entwarnung</b>\n\n" + "\n".join(lines) + ("\n\nAlles läuft, zurück auf alle 3 Stunden." if not fail else ""))
+        msgs.append("🛡️ <b>Sentinel3: Entwarnung</b>\n\n" + "\n".join(lines) + ("\n\nAlles läuft, zurück auf alle 3 Stunden." if not fail and not hold else ""))
     loc_h = NOW.astimezone(ZoneInfo("Europe/Berlin")).hour
     quiet = not (7 <= loc_h < 22)
     remind = [] if quiet else [n for n in fail if n in old and hrs(dt.datetime.fromisoformat(old[n]["last_alert"].replace("Z", "+00:00")), NOW) >= REMIND_H]
@@ -118,8 +121,10 @@ def main():
     nf = {}
     for n, (det, ub) in fail.items():
         o = old.get(n, {})
-        nf[n] = {"since": o.get("since", ts()), "last_alert": ts() if (n in new or n in remind) else o.get("last_alert", ts()), "detail": det}
-    new_state = {"mode": "problem" if fail else "normal", "failing": nf, "last_full": ts(), "last_weekly": st.get("last_weekly")}
+        nf[n] = {"since": o.get("since", ts()), "last_alert": ts() if (n in new or n in remind) else o.get("last_alert", ts()), "detail": det, "ok_streak": 0}
+    for n, k in hold.items():
+        nf[n] = dict(old[n], ok_streak=k)
+    new_state = {"mode": "problem" if nf else "normal", "failing": nf, "last_full": ts(), "last_weekly": st.get("last_weekly")}
     loc = NOW.astimezone(ZoneInfo("Europe/Berlin")); wk = f"{loc.isocalendar()[0]}-W{loc.isocalendar()[1]:02d}"
     if loc.weekday() == 0 and loc.hour >= 7 and st.get("last_weekly") != wk and not MANUAL:
         ok_n = len(res) - len(fail)
