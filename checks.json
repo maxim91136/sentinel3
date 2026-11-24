@@ -31,9 +31,34 @@
    "name": "Bittensor-Labs",
    "url": "https://bittensor-labs.com/",
    "expect": "Bittensor"
+  },
+  {
+   "name": "Cyberlage",
+   "url": "https://cyberlage.org/",
+   "expect": "Cyberlage"
   }
  ],
- "fresh": [],
+ "fresh": [
+  {
+   "name": "Cyberlage Daten (Radar-Abruf)",
+   "url": "https://cyberlage.org/data/lage.json",
+   "field": "radar.abgerufen_am",
+   "max_hours": 12,
+   "used_by": [
+    "Cyberlage",
+    "Telegram-Kanal Cyberlage"
+   ]
+  },
+  {
+   "name": "Dreier Labs Besucherzahlen",
+   "url": "https://dreierlabs.com/stats.json",
+   "field": "generated",
+   "max_hours": 36,
+   "used_by": [
+    "Dreier Labs"
+   ]
+  }
+ ],
  "status_pages": [
   {
    "name": "GitHub",
@@ -56,7 +81,8 @@
    "url": "telegram:getMe",
    "used_by": [
     "3Kings",
-    "Sentinel"
+    "Sentinel",
+    "Cyberlage"
    ]
   },
   {
@@ -116,6 +142,55 @@
    "used_by": [
     "NoSinglePoint",
     "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "CISA KEV",
+   "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "CERT-Bund (WID, RSS)",
+   "url": "https://wid.cert-bund.de/content/public/securityAdvisory/rss",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "EU-KEV (ENISA EUVD)",
+   "url": "https://euvdservices.enisa.europa.eu/api/search?exploited=true&size=1&page=0",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "FIRST EPSS",
+   "url": "https://api.first.org/data/v1/epss?limit=1",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "NVD (NIST)",
+   "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=1",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "SANS ISC",
+   "url": "https://isc.sans.edu/api/infocon?json",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Feodo Tracker (abuse.ch)",
+   "url": "https://feodotracker.abuse.ch/downloads/ipblocklist.json",
+   "used_by": [
+    "Cyberlage"
    ]
   }
  ]

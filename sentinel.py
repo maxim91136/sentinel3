@@ -46,7 +46,8 @@ def once(kind, c):
         ind = json.loads(body)["status"]["indicator"]
         return ind not in ("major", "critical"), f"Status: {ind}"
     if kind == "fresh":
-        ts = json.loads(body).get(c["field"])
+        ts = json.loads(body)
+        for k in c["field"].split("."): ts = ts.get(k) if isinstance(ts, dict) else None
         t = dt.datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
         if t.tzinfo is None: t = t.replace(tzinfo=dt.timezone.utc)
         h = (NOW - t).total_seconds() / 3600
