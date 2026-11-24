@@ -14,8 +14,12 @@ NOW = dt.datetime.now(dt.timezone.utc)
 STATE_F = "state.json"
 REMIND_H = 6
 
-def fetch(url, timeout=20):
-    req = urllib.request.Request(url, headers=UA)
+def fetch(url, timeout=20, access=False):
+    h = dict(UA)
+    if access:  # Cloudflare Access: Service-Token (nur für Seiten hinter Access)
+        h["CF-Access-Client-Id"] = os.environ.get("CF_ACCESS_CLIENT_ID", "")
+        h["CF-Access-Client-Secret"] = os.environ.get("CF_ACCESS_CLIENT_SECRET", "")
+    req = urllib.request.Request(url, headers=h)
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=timeout) as r:
         body = r.read(400_000)
@@ -38,7 +42,11 @@ def once(kind, c):
     if kind == "dep" and c["url"] == "telegram:getMe":
         if not TOKEN: return True, "übersprungen (kein Token)"
         r = tg("getMe"); return bool(r.get("ok")), "Bot erreichbar" if r.get("ok") else str(r)
-    status, body, ms, final = fetch(c["url"])
+    if c.get("access") and not os.environ.get("CF_ACCESS_CLIENT_ID"):
+        return True, "übersprungen (kein Access-Token hinterlegt)"
+    status, body, ms, final = fetch(c["url"], access=bool(c.get("access")))
+    if c.get("access") and b"cloudflareaccess.com" in final.encode() + body[:2000]:
+        return False, "Access lehnt den Token ab (Login-Seite statt Daten)"
     if kind == "site":
         ok = status == 200 and (c["expect"].encode() in body or (c.get("or_access") and ("cloudflareaccess.com" in final or b"Cloudflare Access" in body)))
         return ok, f"{status}, {ms} ms" + ("" if ok else ", erwarteter Inhalt fehlt")
@@ -47,7 +55,8 @@ def once(kind, c):
         return ind not in ("major", "critical"), f"Status: {ind}"
     if kind == "fresh":
         ts = json.loads(body)
-        for k in c["field"].split("."): ts = ts.get(k) if isinstance(ts, dict) else None
+        for k in c["field"].split("."):
+            ts = ts.get(k) if isinstance(ts, dict) else (ts[int(k)] if isinstance(ts, list) and k.isdigit() and int(k) < len(ts) else None)
         t = dt.datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
         if t.tzinfo is None: t = t.replace(tzinfo=dt.timezone.utc)
         h = (NOW - t).total_seconds() / 3600

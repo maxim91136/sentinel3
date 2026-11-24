@@ -15,4 +15,10 @@ Einrichtung: Secrets `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` (private Chat-I
 
 GitHubs eigener Zeitplan läuft oft stundenlang zu spät. Deshalb stößt ein kleiner Cloudflare-Worker (Ordner `worker/`) den Workflow jede Stunde per `workflow_dispatch` mit `mode=tick` an. Der Zeitplan im Workflow bleibt als Reserve. Läuft beides kurz nacheinander, überspringt Sentinel die zweite Prüfung (weniger als 20 Minuten Abstand).
 
-Einrichtung: Worker `sentinel3-ticker` aus `worker/` anlegen, Cron-Trigger `7 * * * *`, Secret `GH_TOKEN` (fine-grained Token, nur dieses Repo, „Actions: Read and write“).
+Derselbe Worker stößt auch den Daten-Workflow von Cyberlage an (alle 2 Stunden und zwei Morgenläufe), weil dessen GitHub-Zeitplan ebenfalls unzuverlässig läuft. Der Zeitplan dort bleibt als Reserve; doppelte Läufe schaden nicht.
+
+Einrichtung: Worker `sentinel3-ticker` aus `worker/` anlegen, Cron-Trigger wie in `wrangler.jsonc`, Secret `GH_TOKEN` (fine-grained Token, nur die Repos `sentinel3` und `cyberlage.org`, „Actions: Read and write“).
+
+## Seiten hinter Cloudflare Access (3Kings)
+
+Für Prüfungen mit `"access": true` in `checks.json` sendet der Sentinel einen Cloudflare-Access-Service-Token mit (Secrets `CF_ACCESS_CLIENT_ID` und `CF_ACCESS_CLIENT_SECRET`). Fehlen sie, wird die Prüfung übersprungen und als solche vermerkt. Der Token gilt nur für die Access-Anwendung von 3Kings und darf dort nur lesen.

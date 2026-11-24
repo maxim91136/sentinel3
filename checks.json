@@ -57,6 +57,27 @@
    "used_by": [
     "Dreier Labs"
    ]
+  },
+  {
+   "name": "3Kings Datenlauf (heartbeat.json)",
+   "url": "https://3kings.dev/heartbeat.json",
+   "field": "generated_at",
+   "max_hours": 60,
+   "access": true,
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "3Kings Hofbericht (news.json)",
+   "url": "https://3kings.dev/news.json",
+   "field": "items.0.date",
+   "max_hours": 72,
+   "access": true,
+   "used_by": [
+    "3Kings",
+    "Telegram-Hofbericht"
+   ]
   }
  ],
  "status_pages": [
