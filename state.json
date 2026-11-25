@@ -1,13 +1,6 @@
 {
- "mode": "problem",
- "failing": {
-  "Cyberlage Daten (Radar-Abruf)": {
-   "since": "2026-11-25T09:07Z",
-   "last_alert": "2026-11-25T09:07Z",
-   "detail": "JSONDecodeError: Expecting value: line 14002 column 1 (char 399819)",
-   "ok_streak": 1
-  }
- },
- "last_full": "2026-11-25T13:07Z",
+ "mode": "normal",
+ "failing": {},
+ "last_full": "2026-11-25T14:07Z",
  "last_weekly": "2026-W48"
 }
