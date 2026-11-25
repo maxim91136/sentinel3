@@ -1,6 +1,19 @@
 {
- "mode": "normal",
- "failing": {},
- "last_full": "2026-11-25T06:07Z",
+ "mode": "problem",
+ "failing": {
+  "Cyberlage Daten (Radar-Abruf)": {
+   "since": "2026-11-25T09:07Z",
+   "last_alert": "2026-11-25T09:07Z",
+   "detail": "JSONDecodeError: Expecting property name enclosed in double quotes: line 14009 column 2 (char 399",
+   "ok_streak": 0
+  },
+  "Cloudflare": {
+   "since": "2026-11-25T09:07Z",
+   "last_alert": "2026-11-25T09:07Z",
+   "detail": "Status: major",
+   "ok_streak": 0
+  }
+ },
+ "last_full": "2026-11-25T09:07Z",
  "last_weekly": "2026-W48"
 }
