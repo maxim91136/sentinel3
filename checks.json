@@ -36,13 +36,22 @@
    "name": "Cyberlage",
    "url": "https://cyberlage.org/",
    "expect": "Cyberlage"
+  },
+  {
+   "name": "Cyberlage Bausteine vollständig",
+   "url": "https://cyberlage.org/data/status.json",
+   "expect": "\"vollstaendig\":true",
+   "used_by": [
+    "Cyberlage",
+    "Telegram-Kanal Cyberlage"
+   ]
   }
  ],
  "fresh": [
   {
    "name": "Cyberlage Daten (Radar-Abruf)",
-   "url": "https://cyberlage.org/data/lage.json",
-   "field": "radar.abgerufen_am",
+   "url": "https://cyberlage.org/data/status.json",
+   "field": "abgerufen_am",
    "max_hours": 12,
    "used_by": [
     "Cyberlage",
@@ -208,8 +217,36 @@
    ]
   },
   {
-   "name": "Feodo Tracker (abuse.ch)",
-   "url": "https://feodotracker.abuse.ch/downloads/ipblocklist.json",
+   "name": "CERT-Bund (WID, Schnittstelle)",
+   "url": "https://wid.cert-bund.de/content/public/securityAdvisory?size=1&sort=published,desc&page=0",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "NCSC-NL (CSAF)",
+   "url": "https://advisories.ncsc.nl/csaf/v2/changes.csv",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Microsoft MSRC",
+   "url": "https://api.msrc.microsoft.com/cvrf/v3.0/updates",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "SANS ISC DShield",
+   "url": "https://isc.sans.edu/api/dailysummary/2026-11-01/2026-11-02?json",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "RansomLook",
+   "url": "https://www.ransomlook.io/api/posts?days=1",
    "used_by": [
     "Cyberlage"
    ]
