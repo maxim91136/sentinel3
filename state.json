@@ -4,16 +4,10 @@
   "Cyberlage Daten (Radar-Abruf)": {
    "since": "2026-11-25T09:07Z",
    "last_alert": "2026-11-25T09:07Z",
-   "detail": "JSONDecodeError: Unterminated string starting at: line 14013 column 19 (char 399818)",
+   "detail": "JSONDecodeError: Expecting value: line 14026 column 7 (char 399822)",
    "ok_streak": 0
-  },
-  "Cloudflare": {
-   "since": "2026-11-25T09:07Z",
-   "last_alert": "2026-11-25T09:07Z",
-   "detail": "Status: major",
-   "ok_streak": 1
   }
  },
- "last_full": "2026-11-25T10:07Z",
+ "last_full": "2026-11-25T11:07Z",
  "last_weekly": "2026-W48"
 }
