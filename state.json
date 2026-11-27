@@ -1,6 +1,31 @@
 {
- "mode": "normal",
- "failing": {},
- "last_full": "2026-11-27T11:59Z",
- "last_weekly": "2026-W48"
+ "mode": "problem",
+ "failing": {
+  "Bitnodes": {
+   "since": "2026-11-27T14:59Z",
+   "last_alert": "2026-11-27T14:59Z",
+   "detail": "HTTP 522",
+   "ok_streak": 0
+  },
+  "NOAA SWPC Sonnenwind": {
+   "since": "2026-11-27T14:59Z",
+   "last_alert": "2026-11-27T14:59Z",
+   "detail": "HTTP 404",
+   "ok_streak": 0
+  },
+  "Binance API (api.binance.com)": {
+   "since": "2026-11-27T14:59Z",
+   "last_alert": "2026-11-27T14:59Z",
+   "detail": "HTTP 451",
+   "ok_streak": 0
+  },
+  "SEC (Firmenliste)": {
+   "since": "2026-11-27T14:59Z",
+   "last_alert": "2026-11-27T14:59Z",
+   "detail": "HTTP 403",
+   "ok_streak": 0
+  }
+ },
+ "last_full": "2026-11-27T14:59Z",
+ "last_daily": null
 }
