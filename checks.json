@@ -483,7 +483,7 @@
   },
   {
    "name": "NOAA SWPC Sonnenwind",
-   "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json",
+   "url": "https://services.swpc.noaa.gov/products/summary/solar-wind-speed.json",
    "used_by": [
     "Daumenprobe"
    ],
