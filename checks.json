@@ -45,6 +45,36 @@
     "Cyberlage",
     "Telegram-Kanal Cyberlage"
    ]
+  },
+  {
+   "name": "Daumenprobe",
+   "url": "https://daumenprobe.com/",
+   "expect": "Daumenprobe"
+  },
+  {
+   "name": "Audit (Dreier-Siegel)",
+   "url": "https://dreierlabs.com/audit/",
+   "expect": "Dreier-Web-Siegel",
+   "used_by": [
+    "Dreier Labs",
+    "Audit"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs API (Netzwerk)",
+   "url": "https://bittensor-labs.com/api/network",
+   "expect": "{",
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs API (Dezentralisierung)",
+   "url": "https://bittensor-labs.com/api/decentralization",
+   "expect": "{",
+   "used_by": [
+    "Bittensor-Labs"
+   ]
   }
  ],
  "fresh": [
@@ -133,12 +163,13 @@
    "name": "Binance Daten-API",
    "url": "https://data-api.binance.vision/api/v3/ping",
    "used_by": [
-    "3Kings"
+    "3Kings",
+    "Bittensor-Labs"
    ]
   },
   {
    "name": "FRED",
-   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd=2026-01-01",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd={Y}-01-01",
    "used_by": [
     "3Kings"
    ]
@@ -239,7 +270,7 @@
   },
   {
    "name": "SANS ISC DShield",
-   "url": "https://isc.sans.edu/api/dailysummary/2026-11-01/2026-11-02?json",
+   "url": "https://isc.sans.edu/api/dailysummary/{D2}/{D1}?json",
    "used_by": [
     "Cyberlage"
    ]
@@ -247,6 +278,195 @@
   {
    "name": "RansomLook",
    "url": "https://www.ransomlook.io/api/posts?days=1",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Open-Meteo Wetter",
+   "url": "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "Open-Meteo Luftqualität",
+   "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=52.52&longitude=13.41&current=pm10",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "NOAA SWPC Kp-Index",
+   "url": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "NOAA SWPC Sonnenwind",
+   "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "USGS Erdbeben",
+   "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "wheretheiss.at (ISS)",
+   "url": "https://api.wheretheiss.at/v1/satellites/25544",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "Wikipedia API (de)",
+   "url": "https://de.wikipedia.org/w/api.php?action=query&prop=info&titles=Berlin&format=json",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "Wikimedia Seitenaufrufe",
+   "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia/all-access/user/Berlin/daily/{W2}/{W1}",
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "alternative.me Fear & Greed",
+   "url": "https://api.alternative.me/fng/?limit=1&format=json",
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Binance API (api.binance.com)",
+   "url": "https://api.binance.com/api/v3/ping",
+   "used_by": [
+    "SatoshisGrid"
+   ]
+  },
+  {
+   "name": "Kraken",
+   "url": "https://api.kraken.com/0/public/Time",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "EZB Datenportal",
+   "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?lastNObservations=1&format=csvdata",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "Stooq",
+   "url": "https://stooq.com/q/d/l/?s=%5Espx&i=d",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "CBOE VIX",
+   "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "BLS",
+   "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "SEC (Firmenliste)",
+   "url": "https://www.sec.gov/files/company_tickers.json",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "Blockchair",
+   "url": "https://api.blockchair.com/bitcoin/stats",
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Kaspa API",
+   "url": "https://api.kaspa.org/info/network",
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Ethereum Beacon (publicnode)",
+   "url": "https://ethereum-beacon-api.publicnode.com/eth/v1/beacon/genesis",
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Blockscout (ETC)",
+   "url": "https://etc.blockscout.com/api/v2/stats",
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Red Hat CSAF",
+   "url": "https://security.access.redhat.com/data/csaf/v2/advisories/changes.csv",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Cisco PSIRT",
+   "url": "https://sec.cloudapps.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Fortinet PSIRT",
+   "url": "https://filestore.fortinet.com/fortiguard/rss/ir.xml",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Amazon Linux (ALAS)",
+   "url": "https://alas.aws.amazon.com/AL2023/alas.rss",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Rocky Linux Errata",
+   "url": "https://errata.rockylinux.org/api/v2/advisories",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "endoflife.date",
+   "url": "https://endoflife.date/api/all.json",
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "CISA KEV (GitHub-Spiegel)",
+   "url": "https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json",
    "used_by": [
     "Cyberlage"
    ]

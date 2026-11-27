@@ -14,7 +14,16 @@ NOW = dt.datetime.now(dt.timezone.utc)
 STATE_F = "state.json"
 REMIND_H = 6
 
+def fill(url):
+    """Platzhalter in URLs: {Y} Jahr, {D1}/{D2} Datum gestern/vorgestern (JJJJ-MM-TT), {W1}/{W2} dasselbe als JJJJMMTT."""
+    d1, d2 = NOW - dt.timedelta(days=1), NOW - dt.timedelta(days=2)
+    for k, v in {"{Y}": str(NOW.year), "{D1}": d1.strftime("%Y-%m-%d"), "{D2}": d2.strftime("%Y-%m-%d"),
+                 "{W1}": d1.strftime("%Y%m%d"), "{W2}": d2.strftime("%Y%m%d")}.items():
+        url = url.replace(k, v)
+    return url
+
 def fetch(url, timeout=20, access=False):
+    url = fill(url)
     h = dict(UA)
     if access:  # Cloudflare Access: Service-Token (nur für Seiten hinter Access)
         h["CF-Access-Client-Id"] = os.environ.get("CF_ACCESS_CLIENT_ID", "")
