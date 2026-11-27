@@ -12,7 +12,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 267 h alt",
+   "detail": "Daten 268 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs DEX": {
    "since": "2026-11-27T22:07Z",
    "last_alert": "2026-11-27T22:07Z",
-   "detail": "Daten 7 h alt",
+   "detail": "Daten 8 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -40,24 +40,8 @@
    "ok_streak": 0,
    "low": true,
    "reminded": false
-  },
-  "Bittensor-Labs Netzwerk": {
-   "since": "2026-11-27T19:07Z",
-   "last_alert": "2026-11-27T19:07Z",
-   "detail": "Daten 8 h alt",
-   "ok_streak": 1,
-   "low": false,
-   "reminded": false
-  },
-  "Stooq": {
-   "since": "2026-11-27T21:04Z",
-   "last_alert": "2026-11-27T21:04Z",
-   "detail": "URLError: &lt;urlopen error timed out&gt;",
-   "ok_streak": 1,
-   "low": true,
-   "reminded": false
   }
  },
- "last_full": "2026-11-27T22:07Z",
+ "last_full": "2026-11-27T23:07Z",
  "last_daily": "2026-11-27"
 }
