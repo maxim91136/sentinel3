@@ -1,19 +1,35 @@
 {
  "mode": "problem",
  "failing": {
+  "Bittensor-Labs Kurs (Taostats)": {
+   "since": "2026-11-27T15:09Z",
+   "last_alert": "2026-11-27T15:09Z",
+   "detail": "Daten 260 h alt",
+   "ok_streak": 0,
+   "low": false
+  },
+  "Datenläufe Bittensor-Labs": {
+   "since": "2026-11-27T15:09Z",
+   "last_alert": "2026-11-27T15:09Z",
+   "detail": "gescheitert: kv - Top History, taostats - Staking APY, taostats - TAO Distribution",
+   "ok_streak": 0,
+   "low": false
+  },
   "Bitnodes": {
    "since": "2026-11-27T14:59Z",
    "last_alert": "2026-11-27T14:59Z",
    "detail": "HTTP 522",
-   "ok_streak": 0
+   "ok_streak": 0,
+   "low": false
   },
   "NOAA SWPC Sonnenwind": {
    "since": "2026-11-27T14:59Z",
    "last_alert": "2026-11-27T14:59Z",
    "detail": "HTTP 404",
-   "ok_streak": 0
+   "ok_streak": 0,
+   "low": true
   }
  },
- "last_full": "2026-11-27T14:59Z",
+ "last_full": "2026-11-27T15:09Z",
  "last_daily": null
 }
