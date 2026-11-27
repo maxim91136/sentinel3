@@ -84,6 +84,17 @@
    "used_by": [
     "Cyberlage"
    ]
+  },
+  {
+   "name": "NoSinglePoint Bitcoin-Zahlen aktuell",
+   "url": "https://nosinglepoint.com/data/network.json",
+   "expect": "generated_at",
+   "reject": "\"stale_since\":\"2",
+   "reject_note": "zeigt übernommene Bitcoin-Zahlen vom Vortag (Bitnodes liefert nicht)",
+   "prio": "low",
+   "used_by": [
+    "NoSinglePoint"
+   ]
   }
  ],
  "fresh": [
@@ -522,7 +533,7 @@
    "prio": "low"
   },
   {
-   "name": "alternative.me Fear & Greed",
+   "name": "alternative.me Angst-und-Gier-Index",
    "url": "https://api.alternative.me/fng/?limit=1&format=json",
    "used_by": [
     "Bittensor-Labs"

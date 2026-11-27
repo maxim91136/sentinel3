@@ -2,7 +2,7 @@
 Normalbetrieb: volle Prüfung alle 3 Stunden. Problemmodus: stündlich, bis alles wieder läuft.
 Meldet sofort nur Wichtiges (neu ausgefallen, wieder in Ordnung, Erinnerung alle 6 Stunden).
 Nebenquellen ("prio": "low") stehen nur im Morgenreport."""
-import json, os, re, sys, time, datetime as dt, urllib.request, urllib.error, urllib.parse
+import html, json, os, re, sys, time, datetime as dt, urllib.request, urllib.error, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from zoneinfo import ZoneInfo
 
@@ -50,6 +50,7 @@ def send(text):
     global SEND_FAILED
     if not (TOKEN and CHAT):
         print("Telegram nicht eingerichtet, Nachricht wäre:\n" + text); return
+    if len(text) > 3900: text = text[:3900].rsplit("\n", 1)[0] + "\n… (gekürzt, Rest im Lauf-Protokoll)"
     for c in [c.strip() for c in CHAT.split(",") if c.strip()]:
         try: tg("sendMessage", chat_id=c, text=text, parse_mode="HTML", disable_web_page_preview="true")
         except Exception as e:
@@ -127,12 +128,12 @@ def once(kind, c):
         r = tg("getMe"); return bool(r.get("ok")), "Bot erreichbar" if r.get("ok") else str(r)
     if c.get("access") and not os.environ.get("CF_ACCESS_CLIENT_ID"):
         return True, "übersprungen (kein Access-Token hinterlegt)"
-    status, body, ms, final = fetch(c["url"], access=bool(c.get("access")), limit=3_000_000 if kind == "fresh" else 400_000)
+    status, body, ms, final = fetch(c["url"], access=bool(c.get("access")), limit=2_000 if kind == "dep" else 5_000_000)
     if c.get("access") and b"cloudflareaccess.com" in final.encode() + body[:2000]:
         return False, "Access lehnt den Token ab (Login-Seite statt Daten)"
     if kind == "site":
         if c.get("reject") and c["reject"].encode() in body:
-            return False, f"{status}, liefert Ersatzwerte statt echter Daten"
+            return False, c.get("reject_note", "liefert Ersatzwerte statt echter Daten")
         ok = status == 200 and (c["expect"].encode() in body or (c.get("or_access") and ("cloudflareaccess.com" in final or b"Cloudflare Access" in body)))
         return ok, f"{status}, {ms} ms" + ("" if ok else ", erwarteter Inhalt fehlt")
     if kind == "status":
@@ -149,12 +150,14 @@ def check(item):
     for attempt in range(2):
         try:
             ok, det = once(kind, c)
-            if ok: return (c["name"], True, det) + meta
+            if ok: return (c["name"], True, html.escape(det, quote=False)) + meta
             last = det
         except urllib.error.HTTPError as e: last = f"HTTP {e.code}"
+        except json.JSONDecodeError: last = "Antwort ist kein gültiges JSON"
+        except TimeoutError: last = "keine Antwort (Zeitüberschreitung)"
         except Exception as e: last = type(e).__name__ + (": " + str(e)[:80] if str(e) else "")
         if attempt == 0: time.sleep(8)
-    return (c["name"], False, last) + meta
+    return (c["name"], False, html.escape(str(last), quote=False)) + meta
 
 def load_state():
     try: return json.load(open(STATE_F))
@@ -218,7 +221,7 @@ def main():
     cfg = json.load(open("checks.json"))
     kinds = [("site", "sites"), ("fresh", "fresh"), ("workflows", "workflows"), ("domain", "domains"), ("status", "status_pages"), ("dep", "deps")]
     items = [(kind, c) for kind, key in kinds for c in cfg.get(key, [])]
-    with ThreadPoolExecutor(8) as ex:
+    with ThreadPoolExecutor(16) as ex:
         res = list(ex.map(check, items))
     for n, ok, det, _, low in res: print(("OK  " if ok else "FEHL"), n, "·", det, "(Nebenquelle)" if low and not ok else "")
 
