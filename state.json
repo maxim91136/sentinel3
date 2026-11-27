@@ -12,7 +12,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 262 h alt",
+   "detail": "Daten 263 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -28,7 +28,7 @@
   "Bitnodes": {
    "since": "2026-11-27T14:59Z",
    "last_alert": "2026-11-27T14:59Z",
-   "detail": "HTTP 522",
+   "detail": "keine Antwort (Zeitüberschreitung)",
    "ok_streak": 0,
    "low": true,
    "reminded": false
@@ -42,6 +42,6 @@
    "reminded": false
   }
  },
- "last_full": "2026-11-27T17:07Z",
+ "last_full": "2026-11-27T18:07Z",
  "last_daily": "2026-11-27"
 }
