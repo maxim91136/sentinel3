@@ -2,12 +2,19 @@
 
 Wacht über die Projekte von [Dreier Labs](https://dreierlabs.com) und die Dienste, an denen sie hängen.
 
-- **Prüft:** die eigenen Seiten (erreichbar, richtiger Inhalt), die Aktualität der 3Kings-Daten, die Statusseiten von GitHub und Cloudflare sowie externe Datenquellen aller Projekte (Märkte, Bitcoin/Bittensor/Krypto-Netze, Sicherheitsmeldungen von Behörden und Herstellern, Wetter/Weltraum für die Daumenprobe, Telegram). Liste: `checks.json`. In URLs sind die Platzhalter `{Y}`, `{D1}`, `{D2}` (Jahr, gestern, vorgestern) und `{W1}`, `{W2}` (Datum ohne Striche) erlaubt.
-- **Rhythmus:** volle Prüfung alle 3 Stunden (gemessen ab der letzten Prüfung, verspätete Läufe gehen nicht verloren); bei einem Problem stündlich, bis alles wieder läuft. Jede Prüfung wird bei Fehlern einmal wiederholt, um Wackler auszufiltern.
-- **Meldungen** per Telegram, nur bei Änderungen: 🔴 Problem, 🟢 Entwarnung mit Ausfalldauer, 🟠 Erinnerung alle 6 Stunden bei Dauerstörung (nur 7 bis 22 Uhr). Dazu jeden Morgen (ab 7 Uhr, einmal täglich) ein Morgenreport mit Gesamtstand, Problemen und Alter der Daten, auch wenn alles ruhig ist.
+- **Prüft** (Liste: `checks.json`):
+  - `sites`: die eigenen Seiten und Schnittstellen (erreichbar, richtiger Inhalt, keine Ersatzwerte)
+  - `fresh`: wie alt die Daten der Projekte sind (Zeitfeld in JSON, `*` für alle Einträge, oder Zeitstempel im Seitentext)
+  - `workflows`: ob Datenläufe in den Projekt-Repos gescheitert sind
+  - `domains`: wann die Domains ablaufen (Warnung 14 Tage vorher)
+  - `status_pages`: Statusseiten von GitHub und Cloudflare
+  - `deps`: externe Datenquellen aller Projekte. Mit `"prio": "low"` sind es Nebenquellen: kein Sofort-Alarm, nur im Morgenreport.
+  - In Adressen sind die Platzhalter `{Y}`, `{D1}`, `{D2}` (Jahr, gestern, vorgestern) und `{W1}`, `{W2}` (Datum ohne Striche) erlaubt.
+- **Rhythmus:** volle Prüfung alle 3 Stunden (gemessen ab der letzten Prüfung, verspätete Läufe gehen nicht verloren); bei einem wichtigen Problem stündlich, bis alles wieder läuft. Jede Prüfung wird bei Fehlern einmal wiederholt, um Wackler auszufiltern.
+- **Meldungen** per Telegram: 🔴 Problem, 🟢 Entwarnung mit Ausfalldauer, 🟠 Erinnerung alle 6 Stunden bei Dauerstörung (nur 7 bis 22 Uhr). Dazu jeden Morgen beim ersten Takt ab 7 Uhr ein Morgenreport mit Gesamtstand, Problemen, gestörten Nebenquellen, Alter der Daten und nächstem Domain-Ablauf. Kommt eine Meldung bei Telegram nicht an, endet der Lauf als Fehler und der nächste Lauf versucht es erneut.
 - **Zustand:** `state.json` (wird nur bei Änderungen geschrieben).
 
-Einrichtung: Secrets `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` (private Chat-ID). Actions → sentinel → Run workflow mit `setup` zeigt Chat-IDs, mit `test` kommt eine Testnachricht, mit `run` wird sofort geprüft.
+Einrichtung: Secrets `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` (private Chat-ID). Actions → sentinel → Run workflow mit `setup` zeigt Chat-IDs, mit `test` kommt eine Testnachricht, mit `run` wird sofort geprüft, mit `probe` und Adressen im Feld `urls` zeigt der Lauf, was GitHub von dort zurückbekommt (zum Testen neuer Prüfungen).
 
 © 2026 Steve Dreier · MIT-Lizenz
 
