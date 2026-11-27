@@ -390,7 +390,8 @@
    "used_by": [
     "NoSinglePoint",
     "NotSoDeFi"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "CISA KEV",

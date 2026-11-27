@@ -1,6 +1,6 @@
 """Sentinel: prüft Seiten, Datenläufe, Domains und Quellen, meldet Änderungen per Telegram.
 Normalbetrieb: volle Prüfung alle 3 Stunden. Problemmodus: stündlich, bis alles wieder läuft.
-Meldet sofort nur Wichtiges (neu ausgefallen, wieder in Ordnung, Erinnerung alle 6 Stunden).
+Meldet sofort nur Wichtiges (neu ausgefallen, wieder in Ordnung, eine Erinnerung nach 6 Stunden).
 Nebenquellen ("prio": "low") stehen nur im Morgenreport."""
 import html, json, os, re, sys, time, datetime as dt, urllib.request, urllib.error, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
@@ -169,7 +169,7 @@ def berlin(t): return t.astimezone(ZoneInfo("Europe/Berlin")).strftime("%d.%m. %
 def dur(h): return f"{h*60:.0f} Min." if h < 1 else f"{h:.1f}".replace(".", ",") + " Std."
 def since(old, n): return f" (seit {berlin(when(old[n]['since']))} Uhr)" if n in old else ""
 
-def morning(res, fail, old, loc):
+def morning(res, fail, old, loc, limits):
     """Morgenreport: einmal täglich ab 7 Uhr, auch wenn alles ruhig ist."""
     main_f = {n: v for n, v in fail.items() if not v[2]}
     side_f = {n: v for n, v in fail.items() if v[2]}
@@ -180,8 +180,11 @@ def morning(res, fail, old, loc):
         t += "\n\n" + "\n".join(f"🔴 <b>{n}</b>: {d}{since(old, n)}\n   betrifft: {', '.join(ub)}" for n, (d, ub, _) in main_f.items())
     if side_f:
         t += "\n\n<b>Nebenquellen gestört</b>\n" + "\n".join(f"🟡 {n}: {d}{since(old, n)} · {', '.join(ub)}" for n, (d, ub, _) in side_f.items())
-    ages = [f"• {n}: {d}" for n, ok, d, _, _ in res if ok and d.startswith(("Daten", "Stand"))]
-    if ages: t += "\n\n<b>Frische der Daten</b>\n" + "\n".join(ages)
+    ages = [(n, int(d.split()[1])) for n, ok, d, _, _ in res if ok and d.startswith(("Daten", "Stand"))]
+    aging = [f"• {n}: {h} h alt (Grenze {limits[n]} h)" for n, h in ages if n in limits and h > limits[n] / 2]  # nur was sich der Grenze nähert
+    if ages:
+        rest = len(ages) - len(aging)
+        t += "\n\n<b>Frische der Daten</b>\n" + "\n".join(aging + ([f"• {'übrige' if aging else 'alle'} {rest} frisch"] if rest else []))
     doms = sorted((int(d.split()[2]), n) for n, ok, d, _, _ in res if ok and d.startswith("läuft in"))
     if doms: t += f"\n\n<b>Domains</b>\n• nächster Ablauf: {doms[0][1].replace('Domain ', '')} in {doms[0][0]} Tagen"
     skipped = [n for n, ok, d, _, _ in res if ok and d.startswith("übersprungen")]
@@ -240,7 +243,7 @@ def main():
     nf = {}
     for n, (det, ub, low) in fail.items():
         o = old.get(n, {})
-        nf[n] = {"since": o.get("since", ts()), "last_alert": o.get("last_alert", ts()), "detail": det, "ok_streak": 0, "low": low}
+        nf[n] = {"since": o.get("since", ts()), "last_alert": o.get("last_alert", ts()), "detail": det, "ok_streak": 0, "low": low, "reminded": bool(o.get("reminded"))}
     for n, k in hold.items():
         nf[n] = dict(old[n], ok_streak=k)
     serious = any(not v.get("low") for v in nf.values())
@@ -248,15 +251,16 @@ def main():
         lines = [f"🟢 <b>{n}</b> wieder in Ordnung (Ausfall ca. {dur(hrs(when(old[n]['since']), NOW))})" for n in gone]
         msgs.append("🛡️ <b>Sentinel3: Entwarnung</b>\n\n" + "\n".join(lines) + ("" if serious else "\n\nAlles Wichtige läuft, zurück auf alle 3 Stunden."))
     quiet = not (7 <= loc.hour < 22)
-    remind = [] if quiet else [n for n in fail if n in old and not fail[n][2] and hrs(when(old[n]["last_alert"]), NOW) >= REMIND_H]
-    if remind:
+    remind = [] if quiet else [n for n in fail if n in old and not fail[n][2] and not old[n].get("reminded") and hrs(when(old[n]["last_alert"]), NOW) >= REMIND_H]
+    for n in remind: nf[n]["reminded"] = True
+    if remind and not report_due:  # steht ohnehin im Morgenreport, wenn der im selben Lauf kommt
         lines = [f"🟠 <b>{n}</b> weiterhin gestört seit {berlin(when(old[n]['since']))} Uhr: {fail[n][0]}" for n in remind]
-        msgs.append("🛡️ <b>Sentinel3: Erinnerung</b>\n\n" + "\n".join(lines))
+        msgs.append("🛡️ <b>Sentinel3: Erinnerung</b>\n\n" + "\n".join(lines) + "\n\nAb jetzt steht das nur noch im Morgenreport, bis es wieder läuft.")
     for n in new + remind: nf[n]["last_alert"] = ts()
 
     new_state = {"mode": "problem" if serious else "normal", "failing": nf, "last_full": ts(), "last_daily": st.get("last_daily")}
     if report_due:
-        msgs.append(morning(res, fail, old, loc)); new_state["last_daily"] = day
+        msgs.append(morning(res, fail, old, loc, {c["name"]: c["max_hours"] for c in cfg.get("fresh", [])})); new_state["last_daily"] = day
     if MANUAL and not msgs:
         txt = f"🛡️ <b>Sentinel3: Manuelle Prüfung</b>\n\n✅ {len(res) - len(fail)} von {len(res)} in Ordnung"
         if fail: txt += "\n" + "\n".join(("🟡" if low else "🔴") + f" <b>{n}</b>: {d}{since(old, n)}" for n, (d, _, low) in fail.items())
