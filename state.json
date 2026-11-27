@@ -12,7 +12,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 265 h alt",
+   "detail": "Daten 266 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs Netzwerk": {
    "since": "2026-11-27T19:07Z",
    "last_alert": "2026-11-27T19:07Z",
-   "detail": "Daten 7 h alt",
+   "detail": "Daten 8 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -41,15 +41,15 @@
    "low": true,
    "reminded": false
   },
-  "Open-Meteo Wetter": {
-   "since": "2026-11-27T16:07Z",
-   "last_alert": "2026-11-27T16:07Z",
-   "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
-   "ok_streak": 1,
-   "low": false,
+  "Stooq": {
+   "since": "2026-11-27T21:04Z",
+   "last_alert": "2026-11-27T21:04Z",
+   "detail": "URLError: &lt;urlopen error timed out&gt;",
+   "ok_streak": 0,
+   "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-27T20:07Z",
+ "last_full": "2026-11-27T21:04Z",
  "last_daily": "2026-11-27"
 }
