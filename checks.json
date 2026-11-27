@@ -76,6 +76,14 @@
    "used_by": [
     "Bittensor-Labs"
    ]
+  },
+  {
+   "name": "Telegram-Kanal Cyberlage",
+   "url": "https://t.me/s/cyberlage_org",
+   "expect": "Cyberlage.org.News",
+   "used_by": [
+    "Cyberlage"
+   ]
   }
  ],
  "fresh": [
@@ -127,6 +135,60 @@
    "used_by": [
     "Audit",
     "Dreier Labs"
+   ]
+  },
+  {
+   "name": "NoSinglePoint Daten",
+   "url": "https://nosinglepoint.com/data/network.json",
+   "field": "generated_at",
+   "max_hours": 36,
+   "used_by": [
+    "NoSinglePoint"
+   ]
+  },
+  {
+   "name": "NotSoDeFi Daten (alle Netze)",
+   "url": "https://notsodefi.com/api/all-metrics",
+   "field": "metrics.*.lastUpdated",
+   "max_hours": 36,
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs Kurs (Taostats)",
+   "url": "https://bittensor-labs.com/api/taostats",
+   "field": "last_updated",
+   "max_hours": 6,
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs Netzwerk",
+   "url": "https://bittensor-labs.com/api/network",
+   "field": "last_issuance_ts",
+   "max_hours": 6,
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs Dezentralisierung",
+   "url": "https://bittensor-labs.com/api/decentralization",
+   "field": "last_updated",
+   "max_hours": 12,
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Bittensor-Labs DEX",
+   "url": "https://bittensor-labs.com/api/dex",
+   "field": "_timestamp",
+   "max_hours": 6,
+   "used_by": [
+    "Bittensor-Labs"
    ]
   }
  ],
