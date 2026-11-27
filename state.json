@@ -1,6 +1,13 @@
 {
- "mode": "normal",
- "failing": {},
- "last_full": "2026-11-27T01:07Z",
+ "mode": "problem",
+ "failing": {
+  "Bitnodes": {
+   "since": "2026-11-27T04:07Z",
+   "last_alert": "2026-11-27T04:07Z",
+   "detail": "HTTP 521",
+   "ok_streak": 0
+  }
+ },
+ "last_full": "2026-11-27T04:07Z",
  "last_weekly": "2026-W48"
 }
