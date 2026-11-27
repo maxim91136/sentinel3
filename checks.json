@@ -117,6 +117,16 @@
     "3Kings",
     "Telegram-Hofbericht"
    ]
+  },
+  {
+   "name": "Audit (Dreier-Siegel) läuft",
+   "url": "https://dreierlabs.com/audit/",
+   "regex": "Stand (\\d{2})\\.(\\d{2})\\.(\\d{4}) (\\d{2}):(\\d{2}) UTC",
+   "max_hours": 36,
+   "used_by": [
+    "Audit",
+    "Dreier Labs"
+   ]
   }
  ],
  "status_pages": [

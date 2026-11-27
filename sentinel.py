@@ -62,6 +62,13 @@ def once(kind, c):
     if kind == "status":
         ind = json.loads(body)["status"]["indicator"]
         return ind not in ("major", "critical"), f"Status: {ind}"
+    if kind == "fresh" and c.get("regex"):
+        import re
+        ms = re.findall(c["regex"], body.decode("utf-8", "replace"))
+        if not ms: return False, "kein Zeitstempel auf der Seite gefunden"
+        t = max(dt.datetime(int(y), int(mo), int(d), int(h), int(mi), tzinfo=dt.timezone.utc) for d, mo, y, h, mi in ms)
+        h = (NOW - t).total_seconds() / 3600
+        return h <= c["max_hours"], f"Stand {h:.0f} h alt"
     if kind == "fresh":
         ts = json.loads(body)
         for k in c["field"].split("."):
@@ -94,6 +101,21 @@ def ts(): return NOW.strftime("%Y-%m-%dT%H:%MZ")
 from zoneinfo import ZoneInfo
 def berlin(t): return t.astimezone(ZoneInfo("Europe/Berlin")).strftime("%d.%m. %H:%M")
 def dur(h): return f"{h*60:.0f} Min." if h < 1 else f"{h:.1f}".replace(".", ",") + " Std."
+
+def morning(res, fail, old, loc):
+    """Morgenreport: einmal täglich ab 7 Uhr, auch wenn alles ruhig ist."""
+    ok_n = len(res) - len(fail)
+    head = "🟢 Alles in Ordnung" if not fail else f"🔴 {len(fail)} Problem(e)"
+    t = f"🛡️ <b>Sentinel3: Morgenreport</b> · {loc.strftime('%d.%m.%Y')}\n\n{head}: {ok_n} von {len(res)} Prüfungen ok"
+    if fail:
+        t += "\n\n" + "\n".join(
+            f"🔴 <b>{n}</b>: {d}" + (f" (seit {berlin(dt.datetime.fromisoformat(old[n]['since'].replace('Z','+00:00')))} Uhr)" if n in old else "")
+            + f"\n   betrifft: {', '.join(ub)}" for n, (d, ub) in fail.items())
+    ages = [f"• {n}: {d}" for n, ok, d, _ in res if ok and d.startswith(("Daten", "Stand"))]
+    if ages: t += "\n\n<b>Frische der Daten</b>\n" + "\n".join(ages)
+    skipped = [n for n, ok, d, _ in res if ok and d.startswith("übersprungen")]
+    if skipped: t += "\n\n⚪ übersprungen: " + ", ".join(skipped)
+    return t
 
 def main():
     if MODE == "setup":
@@ -146,13 +168,11 @@ def main():
         nf[n] = {"since": o.get("since", ts()), "last_alert": ts() if (n in new or n in remind) else o.get("last_alert", ts()), "detail": det, "ok_streak": 0}
     for n, k in hold.items():
         nf[n] = dict(old[n], ok_streak=k)
-    new_state = {"mode": "problem" if nf else "normal", "failing": nf, "last_full": ts(), "last_weekly": st.get("last_weekly")}
-    loc = NOW.astimezone(ZoneInfo("Europe/Berlin")); wk = f"{loc.isocalendar()[0]}-W{loc.isocalendar()[1]:02d}"
-    if loc.weekday() == 0 and loc.hour >= 7 and st.get("last_weekly") != wk and not MANUAL:
-        ok_n = len(res) - len(fail)
-        w = f"🛡️ <b>Sentinel3: Wochencheck</b>\n\nIch laufe. ✅ {ok_n} von {len(res)} in Ordnung"
-        if fail: w += "\n" + "\n".join(f"🔴 <b>{n}</b>: {d}" for n, (d, _) in fail.items())
-        msgs.append(w); new_state["last_weekly"] = wk
+    new_state = {"mode": "problem" if nf else "normal", "failing": nf, "last_full": ts()}
+    loc = NOW.astimezone(ZoneInfo("Europe/Berlin")); day = loc.strftime("%Y-%m-%d")
+    new_state["last_daily"] = st.get("last_daily")
+    if loc.hour >= 7 and st.get("last_daily") != day and not MANUAL:
+        msgs.append(morning(res, fail, old, loc)); new_state["last_daily"] = day
     if MANUAL and not msgs:
         ok_n = len(res) - len(fail)
         txt = f"🛡️ <b>Sentinel3: Manuelle Prüfung</b>\n\n✅ {ok_n} von {len(res)} in Ordnung"
