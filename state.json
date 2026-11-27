@@ -6,37 +6,42 @@
    "last_alert": "2026-11-27T15:26Z",
    "detail": "zeigt übernommene Bitcoin-Zahlen vom Vortag (Bitnodes liefert nicht)",
    "ok_streak": 0,
-   "low": true
+   "low": true,
+   "reminded": false
   },
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 260 h alt",
+   "detail": "Daten 261 h alt",
    "ok_streak": 0,
-   "low": false
+   "low": false,
+   "reminded": false
   },
   "Datenläufe Bittensor-Labs": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
    "detail": "gescheitert: kv - Top History, taostats - Staking APY, taostats - TAO Distribution",
    "ok_streak": 0,
-   "low": false
+   "low": false,
+   "reminded": false
   },
   "Bitnodes": {
    "since": "2026-11-27T14:59Z",
    "last_alert": "2026-11-27T14:59Z",
    "detail": "HTTP 522",
    "ok_streak": 0,
-   "low": false
+   "low": true,
+   "reminded": false
   },
-  "NOAA SWPC Sonnenwind": {
-   "since": "2026-11-27T14:59Z",
-   "last_alert": "2026-11-27T14:59Z",
-   "detail": "HTTP 404",
-   "ok_streak": 1,
-   "low": true
+  "Open-Meteo Wetter": {
+   "since": "2026-11-27T16:07Z",
+   "last_alert": "2026-11-27T16:07Z",
+   "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
+   "ok_streak": 0,
+   "low": false,
+   "reminded": false
   }
  },
- "last_full": "2026-11-27T15:26Z",
- "last_daily": null
+ "last_full": "2026-11-27T16:07Z",
+ "last_daily": "2026-11-27"
 }
