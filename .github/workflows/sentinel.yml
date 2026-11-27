@@ -5,21 +5,27 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "run (jetzt prüfen), tick (Takt von außen), test (Testnachricht), setup (Chat-IDs anzeigen)"
+        description: "run (jetzt prüfen), tick (Takt von außen), test (Testnachricht), setup (Chat-IDs anzeigen), probe (Adressen testen)"
         default: run
+      urls:
+        description: "nur für probe: Adressen, durch Leerzeichen getrennt"
+        default: ""
 permissions:
   contents: write
 concurrency: sentinel
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: python sentinel.py "${{ github.event.inputs.mode || 'run' }}"
+      - run: python sentinel.py "$SENTINEL_MODE"
         env:
+          SENTINEL_MODE: ${{ github.event.inputs.mode || 'run' }}
+          PROBE_URLS: ${{ github.event.inputs.urls }}
+          GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}

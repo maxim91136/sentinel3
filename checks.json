@@ -66,7 +66,8 @@
    "expect": "{",
    "used_by": [
     "Bittensor-Labs"
-   ]
+   ],
+   "reject": "_fallback"
   },
   {
    "name": "Bittensor-Labs API (Dezentralisierung)",
@@ -126,6 +127,109 @@
    "used_by": [
     "Audit",
     "Dreier Labs"
+   ]
+  }
+ ],
+ "workflows": [
+  {
+   "name": "Datenläufe Bittensor-Labs",
+   "repo": "maxim91136/bittensor-labs",
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Datenläufe NotSoDeFi",
+   "repo": "maxim91136/notsodefi",
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Datenläufe NoSinglePoint",
+   "repo": "maxim91136/nosinglepoint",
+   "used_by": [
+    "NoSinglePoint"
+   ]
+  },
+  {
+   "name": "Datenläufe 3Kings",
+   "repo": "maxim91136/3kings",
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "Datenläufe Cyberlage",
+   "repo": "maxim91136/cyberlage.org",
+   "used_by": [
+    "Cyberlage"
+   ]
+  }
+ ],
+ "domains": [
+  {
+   "name": "Domain dreierlabs.com",
+   "domain": "dreierlabs.com",
+   "min_days": 14,
+   "used_by": [
+    "Dreier Labs"
+   ]
+  },
+  {
+   "name": "Domain cyberlage.org",
+   "domain": "cyberlage.org",
+   "min_days": 14,
+   "used_by": [
+    "Cyberlage"
+   ]
+  },
+  {
+   "name": "Domain 3kings.dev",
+   "domain": "3kings.dev",
+   "min_days": 14,
+   "used_by": [
+    "3Kings"
+   ]
+  },
+  {
+   "name": "Domain daumenprobe.com",
+   "domain": "daumenprobe.com",
+   "min_days": 14,
+   "used_by": [
+    "Daumenprobe"
+   ]
+  },
+  {
+   "name": "Domain bittensor-labs.com",
+   "domain": "bittensor-labs.com",
+   "min_days": 14,
+   "used_by": [
+    "Bittensor-Labs"
+   ]
+  },
+  {
+   "name": "Domain notsodefi.com",
+   "domain": "notsodefi.com",
+   "min_days": 14,
+   "used_by": [
+    "NotSoDeFi"
+   ]
+  },
+  {
+   "name": "Domain satoshisgrid.com",
+   "domain": "satoshisgrid.com",
+   "min_days": 14,
+   "used_by": [
+    "SatoshisGrid"
+   ]
+  },
+  {
+   "name": "Domain nosinglepoint.com",
+   "domain": "nosinglepoint.com",
+   "min_days": 14,
+   "used_by": [
+    "NoSinglePoint"
    ]
   }
  ],
@@ -304,168 +408,192 @@
    "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=52.52&longitude=13.41&current=pm10",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "NOAA SWPC Kp-Index",
    "url": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "NOAA SWPC Sonnenwind",
    "url": "https://services.swpc.noaa.gov/products/solar-wind/plasma-5-minute.json",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "USGS Erdbeben",
    "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "wheretheiss.at (ISS)",
    "url": "https://api.wheretheiss.at/v1/satellites/25544",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Wikipedia API (de)",
    "url": "https://de.wikipedia.org/w/api.php?action=query&prop=info&titles=Berlin&format=json",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Wikimedia Seitenaufrufe",
    "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/de.wikipedia/all-access/user/Berlin/daily/{W2}/{W1}",
    "used_by": [
     "Daumenprobe"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "alternative.me Fear & Greed",
    "url": "https://api.alternative.me/fng/?limit=1&format=json",
    "used_by": [
     "Bittensor-Labs"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Kraken",
    "url": "https://api.kraken.com/0/public/Time",
    "used_by": [
     "3Kings"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "EZB Datenportal",
    "url": "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?lastNObservations=1&format=csvdata",
    "used_by": [
     "3Kings"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Stooq",
    "url": "https://stooq.com/q/d/l/?s=%5Espx&i=d",
    "used_by": [
     "3Kings"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "CBOE VIX",
    "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
    "used_by": [
     "3Kings"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "BLS",
    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
    "used_by": [
     "3Kings"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Blockchair",
    "url": "https://api.blockchair.com/bitcoin/stats",
    "used_by": [
     "NotSoDeFi"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Kaspa API",
    "url": "https://api.kaspa.org/info/network",
    "used_by": [
     "NotSoDeFi"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Ethereum Beacon (publicnode)",
    "url": "https://ethereum-beacon-api.publicnode.com/eth/v1/beacon/genesis",
    "used_by": [
     "NotSoDeFi"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Blockscout (ETC)",
    "url": "https://etc.blockscout.com/api/v2/stats",
    "used_by": [
     "NotSoDeFi"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Red Hat CSAF",
    "url": "https://security.access.redhat.com/data/csaf/v2/advisories/changes.csv",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Cisco PSIRT",
    "url": "https://sec.cloudapps.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Fortinet PSIRT",
    "url": "https://filestore.fortinet.com/fortiguard/rss/ir.xml",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Amazon Linux (ALAS)",
    "url": "https://alas.aws.amazon.com/AL2023/alas.rss",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "Rocky Linux Errata",
    "url": "https://errata.rockylinux.org/api/v2/advisories",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "endoflife.date",
    "url": "https://endoflife.date/api/all.json",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   },
   {
    "name": "CISA KEV (GitHub-Spiegel)",
    "url": "https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json",
    "used_by": [
     "Cyberlage"
-   ]
+   ],
+   "prio": "low"
   }
  ]
 }
