@@ -12,7 +12,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 264 h alt",
+   "detail": "Daten 265 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs Netzwerk": {
    "since": "2026-11-27T19:07Z",
    "last_alert": "2026-11-27T19:07Z",
-   "detail": "Daten 6 h alt",
+   "detail": "Daten 7 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -33,23 +33,23 @@
    "low": false,
    "reminded": false
   },
+  "Bitnodes": {
+   "since": "2026-11-27T14:59Z",
+   "last_alert": "2026-11-27T14:59Z",
+   "detail": "HTTP 503",
+   "ok_streak": 0,
+   "low": true,
+   "reminded": false
+  },
   "Open-Meteo Wetter": {
    "since": "2026-11-27T16:07Z",
    "last_alert": "2026-11-27T16:07Z",
    "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
-   "ok_streak": 0,
-   "low": false,
-   "reminded": false
-  },
-  "Bitnodes": {
-   "since": "2026-11-27T14:59Z",
-   "last_alert": "2026-11-27T14:59Z",
-   "detail": "keine Antwort (Zeitüberschreitung)",
    "ok_streak": 1,
-   "low": true,
+   "low": false,
    "reminded": false
   }
  },
- "last_full": "2026-11-27T19:07Z",
+ "last_full": "2026-11-27T20:07Z",
  "last_daily": "2026-11-27"
 }
