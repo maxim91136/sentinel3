@@ -356,13 +356,6 @@
    ]
   },
   {
-   "name": "Binance API (api.binance.com)",
-   "url": "https://api.binance.com/api/v3/ping",
-   "used_by": [
-    "SatoshisGrid"
-   ]
-  },
-  {
    "name": "Kraken",
    "url": "https://api.kraken.com/0/public/Time",
    "used_by": [
@@ -393,13 +386,6 @@
   {
    "name": "BLS",
    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/CUUR0000SA0",
-   "used_by": [
-    "3Kings"
-   ]
-  },
-  {
-   "name": "SEC (Firmenliste)",
-   "url": "https://www.sec.gov/files/company_tickers.json",
    "used_by": [
     "3Kings"
    ]
