@@ -3,9 +3,7 @@
   {
    "name": "3Kings",
    "url": "https://3kings.dev/",
-   "expect": "3Kings",
-   "or_access": true,
-   "note": "hinter Cloudflare Access: Login-Seite genügt"
+   "expect": "3Kings"
   },
   {
    "name": "Dreier Labs",
@@ -122,7 +120,6 @@
    "url": "https://3kings.dev/heartbeat.json",
    "field": "generated_at",
    "max_hours": 60,
-   "access": true,
    "used_by": [
     "3Kings"
    ]
@@ -132,7 +129,6 @@
    "url": "https://3kings.dev/news.json",
    "field": "items.0.date",
    "max_hours": 100,
-   "access": true,
    "used_by": [
     "3Kings",
     "Telegram-Hofbericht"

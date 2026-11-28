@@ -26,7 +26,3 @@ GitHubs eigener Zeitplan läuft oft stundenlang zu spät. Deshalb stößt ein kl
 Derselbe Worker stößt auch den Daten-Workflow von Cyberlage an (alle 2 Stunden und zwei Morgenläufe), weil dessen GitHub-Zeitplan ebenfalls unzuverlässig läuft. Der Zeitplan dort bleibt als Reserve; doppelte Läufe schaden nicht.
 
 Einrichtung: Worker `sentinel3-ticker` aus `worker/` anlegen, Cron-Trigger wie in `wrangler.jsonc`, Secret `GH_TOKEN` (fine-grained Token, nur die Repos `sentinel3` und `cyberlage.org`, „Actions: Read and write“).
-
-## Seiten hinter Cloudflare Access (3Kings)
-
-Für Prüfungen mit `"access": true` in `checks.json` sendet der Sentinel einen Cloudflare-Access-Service-Token mit (Secrets `CF_ACCESS_CLIENT_ID` und `CF_ACCESS_CLIENT_SECRET`). Fehlen sie, wird die Prüfung übersprungen und als solche vermerkt. Der Token gilt nur für die Access-Anwendung von 3Kings und darf dort nur lesen.

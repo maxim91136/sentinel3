@@ -34,12 +34,9 @@ def fill(url):
         url = url.replace(k, v)
     return url
 
-def fetch(url, timeout=20, access=False, limit=400_000, token=None):
+def fetch(url, timeout=20, limit=400_000, token=None):
     url = fill(url)
     h = dict(UA)
-    if access:  # Cloudflare Access: Service-Token (nur für Seiten hinter Access)
-        h["CF-Access-Client-Id"] = os.environ.get("CF_ACCESS_CLIENT_ID", "")
-        h["CF-Access-Client-Secret"] = os.environ.get("CF_ACCESS_CLIENT_SECRET", "")
     if url.startswith("https://api.github.com/"):
         h["Accept"] = "application/vnd.github+json"
         if token or GH: h["Authorization"] = "Bearer " + (token or GH)
@@ -146,15 +143,11 @@ def once(kind, c):
         try: ok = bool(tg("getChat", chat_id=cid).get("ok"))
         except urllib.error.HTTPError: ok = False
         return ok, "Kanal erreichbar" if ok else "Bot hat keinen Zugriff auf den Kanal"
-    if c.get("access") and not os.environ.get("CF_ACCESS_CLIENT_ID"):
-        return True, "übersprungen (kein Access-Token hinterlegt)"
-    status, body, ms, final = fetch(c["url"], access=bool(c.get("access")), limit=2_000 if kind == "dep" else 5_000_000)
-    if c.get("access") and b"cloudflareaccess.com" in final.encode() + body[:2000]:
-        return False, "Access lehnt den Token ab (Login-Seite statt Daten)"
+    status, body, ms, final = fetch(c["url"], limit=2_000 if kind == "dep" else 5_000_000)
     if kind == "site":
         if c.get("reject") and c["reject"].encode() in body:
             return False, c.get("reject_note", "liefert Ersatzwerte statt echter Daten")
-        ok = status == 200 and (c["expect"].encode() in body or (c.get("or_access") and ("cloudflareaccess.com" in final or b"Cloudflare Access" in body)))
+        ok = status == 200 and (c["expect"].encode() in body)
         return ok, f"{status}, {ms} ms" + ("" if ok else ", erwarteter Inhalt fehlt")
     if kind == "status":
         ind = json.loads(body)["status"]["indicator"]
