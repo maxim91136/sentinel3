@@ -9,37 +9,29 @@
    "low": true,
    "reminded": false
   },
-  "3Kings Hofbericht (news.json)": {
-   "since": "2026-11-28T00:07Z",
-   "last_alert": "2026-11-28T00:07Z",
-   "detail": "Daten 77 h alt",
-   "ok_streak": 0,
-   "low": false,
-   "reminded": false
-  },
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
-   "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 274 h alt",
+   "last_alert": "2026-11-28T06:07Z",
+   "detail": "Daten 275 h alt",
    "ok_streak": 0,
    "low": false,
-   "reminded": false
+   "reminded": true
   },
   "Bittensor-Labs Dezentralisierung": {
    "since": "2026-11-28T02:07Z",
    "last_alert": "2026-11-28T02:07Z",
-   "detail": "Daten 16 h alt",
+   "detail": "Daten 17 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
   },
   "Datenläufe Bittensor-Labs": {
    "since": "2026-11-27T15:09Z",
-   "last_alert": "2026-11-27T15:09Z",
+   "last_alert": "2026-11-28T06:07Z",
    "detail": "gescheitert: kv - Top History, taostats - Staking APY, taostats - TAO Distribution",
    "ok_streak": 0,
    "low": false,
-   "reminded": false
+   "reminded": true
   },
   "Open-Meteo Wetter": {
    "since": "2026-11-28T03:07Z",
@@ -56,8 +48,16 @@
    "ok_streak": 0,
    "low": true,
    "reminded": false
+  },
+  "3Kings Hofbericht (news.json)": {
+   "since": "2026-11-28T00:07Z",
+   "last_alert": "2026-11-28T00:07Z",
+   "detail": "Daten 77 h alt",
+   "ok_streak": 1,
+   "low": false,
+   "reminded": false
   }
  },
- "last_full": "2026-11-28T05:07Z",
- "last_daily": "2026-11-27"
+ "last_full": "2026-11-28T06:07Z",
+ "last_daily": "2026-11-28"
 }
