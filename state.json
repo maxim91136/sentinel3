@@ -1,5 +1,5 @@
 {
- "mode": "problem",
+ "mode": "normal",
  "failing": {
   "NoSinglePoint Bitcoin-Zahlen aktuell": {
    "since": "2026-11-27T15:26Z",
@@ -8,17 +8,9 @@
    "ok_streak": 0,
    "low": true,
    "reminded": false
-  },
-  "Bittensor-Labs Netzwerk": {
-   "since": "2026-11-28T09:49Z",
-   "last_alert": "2026-11-28T09:49Z",
-   "detail": "Daten 7 h alt",
-   "ok_streak": 1,
-   "low": false,
-   "reminded": false
   }
  },
- "last_full": "2026-11-28T10:50Z",
+ "last_full": "2026-11-28T11:23Z",
  "last_daily": "2026-11-28",
  "status_msg": 40
 }
