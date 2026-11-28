@@ -9,18 +9,18 @@
    "low": true,
    "reminded": false
   },
-  "Bittensor-Labs Kurs (Taostats)": {
-   "since": "2026-11-27T15:09Z",
-   "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 268 h alt",
+  "3Kings Hofbericht (news.json)": {
+   "since": "2026-11-28T00:07Z",
+   "last_alert": "2026-11-28T00:07Z",
+   "detail": "Daten 72 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
   },
-  "Bittensor-Labs DEX": {
-   "since": "2026-11-27T22:07Z",
-   "last_alert": "2026-11-27T22:07Z",
-   "detail": "Daten 8 h alt",
+  "Bittensor-Labs Kurs (Taostats)": {
+   "since": "2026-11-27T15:09Z",
+   "last_alert": "2026-11-27T15:09Z",
+   "detail": "Daten 269 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -40,8 +40,16 @@
    "ok_streak": 0,
    "low": true,
    "reminded": false
+  },
+  "Bittensor-Labs DEX": {
+   "since": "2026-11-27T22:07Z",
+   "last_alert": "2026-11-27T22:07Z",
+   "detail": "Daten 8 h alt",
+   "ok_streak": 1,
+   "low": false,
+   "reminded": false
   }
  },
- "last_full": "2026-11-27T23:07Z",
+ "last_full": "2026-11-28T00:07Z",
  "last_daily": "2026-11-27"
 }
