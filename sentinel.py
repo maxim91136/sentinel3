@@ -227,6 +227,35 @@ def probe():
         except urllib.error.HTTPError as e: print(f"\n=== HTTP {e.code} · {u}")
         except Exception as e: print(f"\n=== {type(e).__name__}: {str(e)[:100]} · {u}")
 
+def status_board(res, fail, loc, st):
+    """Angepinnte Statusnachricht (Leitstand): wird bei jeder vollen Prüfung bearbeitet, nicht neu gesendet.
+    Best-effort: ein Fehler hier darf nie den Lauf kippen. Gibt die Nachrichten-ID zurück."""
+    if not (TOKEN and CHAT): return st.get("status_msg")
+    chat = CHAT.split(",")[0].strip()
+    ernst = [n for n, v in fail.items() if not v[2]]
+    neben = [n for n, v in fail.items() if v[2]]
+    ok = len(res) - len(fail)
+    kopf = ("🟢 <b>Alles ruhig</b>" if not ernst else f"🔴 <b>{len(ernst)} Störung(en)</b>")
+    z = [f"🛡️ <b>Sentinel3 · Leitstand</b>", f"{kopf} · {ok} von {len(res)} in Ordnung"]
+    z += [f"🔴 {html.escape(n)}" for n in ernst] + [f"🟡 {html.escape(n)} (Nebenquelle)" for n in neben]
+    z.append(f"Stand {loc.strftime('%d.%m. %H:%M')} Uhr · ist das älter als ca. 4 Std., stimmt etwas nicht")
+    text = "\n".join(z)[:3900]
+    mid = st.get("status_msg")
+    try:
+        if mid:
+            try: tg("editMessageText", chat_id=chat, message_id=mid, text=text, parse_mode="HTML")
+            except urllib.error.HTTPError as e:
+                body = e.read().decode("utf-8", "replace")
+                if "not modified" in body: return mid
+                mid = None  # Nachricht gelöscht o. ä.: neu anlegen
+        if not mid:
+            mid = tg("sendMessage", chat_id=chat, text=text, parse_mode="HTML", disable_notification="true")["result"]["message_id"]
+            try: tg("pinChatMessage", chat_id=chat, message_id=mid, disable_notification="true")
+            except Exception as e: print("Anpinnen nicht möglich (dem Bot das Recht 'Nachrichten anpinnen' geben):", type(e).__name__)
+    except Exception as e:
+        print("Statusnachricht fehlgeschlagen:", type(e).__name__)
+    return mid
+
 def main():
     if MODE == "setup":
         # Chat-IDs nicht ins (öffentliche) Protokoll schreiben, sondern dem jeweiligen Chat per Telegram nennen
@@ -291,7 +320,7 @@ def main():
         msgs.append("🛡️ <b>Sentinel3: Erinnerung</b>\n\n" + "\n".join(lines) + "\n\nAb jetzt steht das nur noch im Morgenreport, bis es wieder läuft.")
     for n in new + remind: nf[n]["last_alert"] = ts()
 
-    new_state = {"mode": "problem" if serious else "normal", "failing": nf, "last_full": ts(), "last_daily": st.get("last_daily")}
+    new_state = {"mode": "problem" if serious else "normal", "failing": nf, "last_full": ts(), "last_daily": st.get("last_daily"), "status_msg": st.get("status_msg")}
     if report_due:
         msgs.append(morning(res, fail, old, loc, {c["name"]: c["max_hours"] for c in cfg.get("fresh", [])})); new_state["last_daily"] = day
     if MANUAL and not msgs:
@@ -299,6 +328,7 @@ def main():
         if fail: txt += "\n" + "\n".join(("🟡" if low else "🔴") + f" <b>{n}</b>: {shown(n, d)}{since(old, n)}" for n, (d, _, low) in fail.items())
         msgs.append(txt)
     for m in msgs: send(m)
+    new_state["status_msg"] = status_board(res, fail, loc, st)
     if SEND_FAILED:
         # Zustand nicht speichern: der nächste Lauf versucht dieselbe Meldung erneut.
         # Der Lauf endet als Fehler, damit GitHub per E-Mail Bescheid gibt.
