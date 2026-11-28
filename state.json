@@ -12,7 +12,7 @@
   "3Kings Hofbericht (news.json)": {
    "since": "2026-11-28T00:07Z",
    "last_alert": "2026-11-28T00:07Z",
-   "detail": "Daten 72 h alt",
+   "detail": "Daten 73 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 269 h alt",
+   "detail": "Daten 270 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -41,15 +41,15 @@
    "low": true,
    "reminded": false
   },
-  "Bittensor-Labs DEX": {
-   "since": "2026-11-27T22:07Z",
-   "last_alert": "2026-11-27T22:07Z",
-   "detail": "Daten 8 h alt",
-   "ok_streak": 1,
-   "low": false,
+  "Stooq": {
+   "since": "2026-11-28T01:07Z",
+   "last_alert": "2026-11-28T01:07Z",
+   "detail": "URLError: &lt;urlopen error timed out&gt;",
+   "ok_streak": 0,
+   "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T00:07Z",
+ "last_full": "2026-11-28T01:07Z",
  "last_daily": "2026-11-27"
 }
