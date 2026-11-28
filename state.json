@@ -12,7 +12,7 @@
   "3Kings Hofbericht (news.json)": {
    "since": "2026-11-28T00:07Z",
    "last_alert": "2026-11-28T00:07Z",
-   "detail": "Daten 76 h alt",
+   "detail": "Daten 77 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 273 h alt",
+   "detail": "Daten 274 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -28,7 +28,7 @@
   "Bittensor-Labs Dezentralisierung": {
    "since": "2026-11-28T02:07Z",
    "last_alert": "2026-11-28T02:07Z",
-   "detail": "Daten 15 h alt",
+   "detail": "Daten 16 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -45,11 +45,19 @@
    "since": "2026-11-28T03:07Z",
    "last_alert": "2026-11-28T03:07Z",
    "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
-   "ok_streak": 1,
+   "ok_streak": 0,
    "low": false,
+   "reminded": false
+  },
+  "Stooq": {
+   "since": "2026-11-28T05:07Z",
+   "last_alert": "2026-11-28T05:07Z",
+   "detail": "URLError: &lt;urlopen error timed out&gt;",
+   "ok_streak": 0,
+   "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T04:07Z",
+ "last_full": "2026-11-28T05:07Z",
  "last_daily": "2026-11-27"
 }
