@@ -76,8 +76,9 @@ def dig(v, keys):
     return [None]
 
 def fresh(c, body):
-    if c.get("regex"):  # Zeitstempel im Seitentext, Gruppen: Tag, Monat, Jahr, Stunde, Minute (UTC)
-        ms = re.findall(c["regex"], body.decode("utf-8", "replace"))
+    if c.get("regex"):  # Zeitstempel im sichtbaren Seitentext (ohne HTML-Tags), Gruppen: Tag, Monat, Jahr, Stunde, Minute (UTC)
+        text = " ".join(re.sub(r"<[^>]+>", " ", body.decode("utf-8", "replace")).split())
+        ms = re.findall(c["regex"], text)
         if not ms: return False, "kein Zeitstempel auf der Seite gefunden"
         times = [dt.datetime(int(y), int(mo), int(d), int(h), int(mi), tzinfo=dt.timezone.utc) for d, mo, y, h, mi in ms]
         h = (NOW - max(times)).total_seconds() / 3600
@@ -126,7 +127,7 @@ def once(kind, c):
     if kind == "domain": return domain(c)
     if kind == "dep" and c["url"] == "telegram:getMe":
         if not TOKEN: return True, "übersprungen (kein Token)"
-        r = tg("getMe"); return bool(r.get("ok")), "Bot erreichbar" if r.get("ok") else str(r)
+        r = tg("getMe"); return bool(r.get("ok")), f"Bot @{r['result'].get('username', '?')} erreichbar" if r.get("ok") else str(r)
     if kind == "dep" and c["url"].startswith("telegram:getChat:"):
         cid = os.environ.get(c["url"].split(":", 2)[2], "")
         if not (TOKEN and cid): return True, "übersprungen (keine Chat-ID hinterlegt)"

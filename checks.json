@@ -210,6 +210,16 @@
    "used_by": [
     "Bittensor-Labs"
    ]
+  },
+  {
+   "name": "Audit Datei-Integrität",
+   "url": "https://dreierlabs.com/audit/",
+   "regex": "Datei-Integrität[^()]{0,200}\\(Stand (\\d{2})\\.(\\d{2})\\.(\\d{4}) (\\d{2}):(\\d{2}) UTC\\)",
+   "max_hours": 36,
+   "used_by": [
+    "Audit",
+    "Dreier Labs"
+   ]
   }
  ],
  "workflows": [
@@ -686,22 +696,6 @@
     "Cyberlage"
    ],
    "prio": "low"
-  },
-  {
-   "name": "Telegram-Kanal Dreier Labs Audits",
-   "url": "telegram:getChat:TELEGRAM_AUDIT_CHAT_ID",
-   "prio": "low",
-   "used_by": [
-    "Audit"
-   ]
-  },
-  {
-   "name": "Telegram-Kanal 3Kings.dev.News",
-   "url": "telegram:getChat:TELEGRAM_3KINGS_CHAT_ID",
-   "prio": "low",
-   "used_by": [
-    "3Kings"
-   ]
   }
  ]
 }
