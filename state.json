@@ -12,12 +12,12 @@
   "Bittensor-Labs Netzwerk": {
    "since": "2026-11-28T09:49Z",
    "last_alert": "2026-11-28T09:49Z",
-   "detail": "Daten 6 h alt",
+   "detail": "Daten 7 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T10:02Z",
+ "last_full": "2026-11-28T10:10Z",
  "last_daily": "2026-11-28"
 }
