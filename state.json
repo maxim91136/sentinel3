@@ -9,11 +9,19 @@
    "low": true,
    "reminded": false
   },
+  "Open-Meteo Wetter": {
+   "since": "2026-11-28T03:07Z",
+   "last_alert": "2026-11-28T03:07Z",
+   "detail": "keine Antwort (Zeitüberschreitung)",
+   "ok_streak": 0,
+   "low": false,
+   "reminded": false
+  },
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-28T06:07Z",
    "detail": "Daten 275 h alt",
-   "ok_streak": 0,
+   "ok_streak": 1,
    "low": false,
    "reminded": true
   },
@@ -21,7 +29,7 @@
    "since": "2026-11-28T02:07Z",
    "last_alert": "2026-11-28T02:07Z",
    "detail": "Daten 17 h alt",
-   "ok_streak": 0,
+   "ok_streak": 1,
    "low": false,
    "reminded": false
   },
@@ -29,35 +37,19 @@
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-28T06:07Z",
    "detail": "gescheitert: kv - Top History, taostats - Staking APY, taostats - TAO Distribution",
-   "ok_streak": 0,
+   "ok_streak": 1,
    "low": false,
    "reminded": true
-  },
-  "Open-Meteo Wetter": {
-   "since": "2026-11-28T03:07Z",
-   "last_alert": "2026-11-28T03:07Z",
-   "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
-   "ok_streak": 0,
-   "low": false,
-   "reminded": false
   },
   "Stooq": {
    "since": "2026-11-28T05:07Z",
    "last_alert": "2026-11-28T05:07Z",
    "detail": "URLError: &lt;urlopen error timed out&gt;",
-   "ok_streak": 0,
-   "low": true,
-   "reminded": false
-  },
-  "3Kings Hofbericht (news.json)": {
-   "since": "2026-11-28T00:07Z",
-   "last_alert": "2026-11-28T00:07Z",
-   "detail": "Daten 77 h alt",
    "ok_streak": 1,
-   "low": false,
+   "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T06:07Z",
+ "last_full": "2026-11-28T07:07Z",
  "last_daily": "2026-11-28"
 }
