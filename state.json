@@ -19,13 +19,13 @@
   },
   "Open-Meteo Wetter": {
    "since": "2026-11-28T03:07Z",
-   "last_alert": "2026-11-28T03:07Z",
+   "last_alert": "2026-11-28T09:07Z",
    "detail": "keine Antwort (Zeitüberschreitung)",
-   "ok_streak": 1,
+   "ok_streak": 0,
    "low": false,
-   "reminded": false
+   "reminded": true
   }
  },
- "last_full": "2026-11-28T08:07Z",
+ "last_full": "2026-11-28T09:07Z",
  "last_daily": "2026-11-28"
 }
