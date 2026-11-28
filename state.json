@@ -4,13 +4,13 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-28T15:07Z",
    "last_alert": "2026-11-28T15:07Z",
-   "detail": "Daten 9 h alt",
+   "detail": "Daten 10 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T16:07Z",
+ "last_full": "2026-11-28T17:07Z",
  "last_daily": "2026-11-28",
  "status_msg": 40
 }
