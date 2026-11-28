@@ -179,7 +179,7 @@
    "name": "Bittensor-Labs Netzwerk",
    "url": "https://bittensor-labs.com/api/network",
    "field": "last_issuance_ts",
-   "max_hours": 6,
+   "max_hours": 12,
    "used_by": [
     "Bittensor-Labs"
    ]
