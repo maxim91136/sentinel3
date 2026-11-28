@@ -9,47 +9,23 @@
    "low": true,
    "reminded": false
   },
-  "Open-Meteo Wetter": {
-   "since": "2026-11-28T03:07Z",
-   "last_alert": "2026-11-28T03:07Z",
-   "detail": "keine Antwort (Zeitüberschreitung)",
+  "Cloudflare": {
+   "since": "2026-11-28T08:07Z",
+   "last_alert": "2026-11-28T08:07Z",
+   "detail": "Status: major",
    "ok_streak": 0,
    "low": false,
    "reminded": false
   },
-  "Bittensor-Labs Kurs (Taostats)": {
-   "since": "2026-11-27T15:09Z",
-   "last_alert": "2026-11-28T06:07Z",
-   "detail": "Daten 275 h alt",
+  "Open-Meteo Wetter": {
+   "since": "2026-11-28T03:07Z",
+   "last_alert": "2026-11-28T03:07Z",
+   "detail": "keine Antwort (Zeitüberschreitung)",
    "ok_streak": 1,
    "low": false,
-   "reminded": true
-  },
-  "Bittensor-Labs Dezentralisierung": {
-   "since": "2026-11-28T02:07Z",
-   "last_alert": "2026-11-28T02:07Z",
-   "detail": "Daten 17 h alt",
-   "ok_streak": 1,
-   "low": false,
-   "reminded": false
-  },
-  "Datenläufe Bittensor-Labs": {
-   "since": "2026-11-27T15:09Z",
-   "last_alert": "2026-11-28T06:07Z",
-   "detail": "gescheitert: kv - Top History, taostats - Staking APY, taostats - TAO Distribution",
-   "ok_streak": 1,
-   "low": false,
-   "reminded": true
-  },
-  "Stooq": {
-   "since": "2026-11-28T05:07Z",
-   "last_alert": "2026-11-28T05:07Z",
-   "detail": "URLError: &lt;urlopen error timed out&gt;",
-   "ok_streak": 1,
-   "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T07:07Z",
+ "last_full": "2026-11-28T08:07Z",
  "last_daily": "2026-11-28"
 }
