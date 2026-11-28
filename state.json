@@ -12,7 +12,7 @@
   "3Kings Hofbericht (news.json)": {
    "since": "2026-11-28T00:07Z",
    "last_alert": "2026-11-28T00:07Z",
-   "detail": "Daten 74 h alt",
+   "detail": "Daten 75 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -20,7 +20,7 @@
   "Bittensor-Labs Kurs (Taostats)": {
    "since": "2026-11-27T15:09Z",
    "last_alert": "2026-11-27T15:09Z",
-   "detail": "Daten 271 h alt",
+   "detail": "Daten 272 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -28,7 +28,7 @@
   "Bittensor-Labs Dezentralisierung": {
    "since": "2026-11-28T02:07Z",
    "last_alert": "2026-11-28T02:07Z",
-   "detail": "Daten 13 h alt",
+   "detail": "Daten 14 h alt",
    "ok_streak": 0,
    "low": false,
    "reminded": false
@@ -41,23 +41,15 @@
    "low": false,
    "reminded": false
   },
-  "Bitnodes": {
-   "since": "2026-11-27T14:59Z",
-   "last_alert": "2026-11-27T14:59Z",
-   "detail": "HTTP 503",
-   "ok_streak": 1,
-   "low": true,
-   "reminded": false
-  },
-  "Stooq": {
-   "since": "2026-11-28T01:07Z",
-   "last_alert": "2026-11-28T01:07Z",
-   "detail": "URLError: &lt;urlopen error timed out&gt;",
-   "ok_streak": 1,
-   "low": true,
+  "Open-Meteo Wetter": {
+   "since": "2026-11-28T03:07Z",
+   "last_alert": "2026-11-28T03:07Z",
+   "detail": "URLError: &lt;urlopen error _ssl.c:994: The handshake operation timed out&gt;",
+   "ok_streak": 0,
+   "low": false,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T02:07Z",
+ "last_full": "2026-11-28T03:07Z",
  "last_daily": "2026-11-27"
 }
