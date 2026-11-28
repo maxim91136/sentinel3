@@ -131,7 +131,7 @@
    "name": "3Kings Hofbericht (news.json)",
    "url": "https://3kings.dev/news.json",
    "field": "items.0.date",
-   "max_hours": 72,
+   "max_hours": 100,
    "access": true,
    "used_by": [
     "3Kings",
@@ -188,7 +188,7 @@
    "name": "Bittensor-Labs Dezentralisierung",
    "url": "https://bittensor-labs.com/api/decentralization",
    "field": "last_updated",
-   "max_hours": 12,
+   "max_hours": 36,
    "used_by": [
     "Bittensor-Labs"
    ]

@@ -155,6 +155,9 @@ def check(item):
         except urllib.error.HTTPError as e: last = f"HTTP {e.code}"
         except json.JSONDecodeError: last = "Antwort ist kein gültiges JSON"
         except TimeoutError: last = "keine Antwort (Zeitüberschreitung)"
+        except urllib.error.URLError as e:
+            r = str(e.reason)
+            last = "keine Antwort (Zeitüberschreitung)" if "timed out" in r else "Name nicht auflösbar (DNS)" if "Name or service" in r or "getaddrinfo" in r else "keine Verbindung: " + r[:70]
         except Exception as e: last = type(e).__name__ + (": " + str(e)[:80] if str(e) else "")
         if attempt == 0: time.sleep(8)
     return (c["name"], False, html.escape(str(last), quote=False)) + meta
