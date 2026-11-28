@@ -247,6 +247,15 @@
    "used_by": [
     "Cyberlage"
    ]
+  },
+  {
+   "name": "Datenläufe Dreier Labs",
+   "repo": "maxim91136/dreierlabs",
+   "token_env": "GH_READ_TOKEN",
+   "used_by": [
+    "Dreier Labs",
+    "Audit"
+   ]
   }
  ],
  "domains": [
@@ -677,6 +686,22 @@
     "Cyberlage"
    ],
    "prio": "low"
+  },
+  {
+   "name": "Telegram-Kanal Dreier Labs Audits",
+   "url": "telegram:getChat:TELEGRAM_AUDIT_CHAT_ID",
+   "prio": "low",
+   "used_by": [
+    "Audit"
+   ]
+  },
+  {
+   "name": "Telegram-Kanal 3Kings.dev.News",
+   "url": "telegram:getChat:TELEGRAM_3KINGS_CHAT_ID",
+   "prio": "low",
+   "used_by": [
+    "3Kings"
+   ]
   }
  ]
 }

@@ -26,7 +26,7 @@ def fill(url):
         url = url.replace(k, v)
     return url
 
-def fetch(url, timeout=20, access=False, limit=400_000):
+def fetch(url, timeout=20, access=False, limit=400_000, token=None):
     url = fill(url)
     h = dict(UA)
     if access:  # Cloudflare Access: Service-Token (nur für Seiten hinter Access)
@@ -34,7 +34,7 @@ def fetch(url, timeout=20, access=False, limit=400_000):
         h["CF-Access-Client-Secret"] = os.environ.get("CF_ACCESS_CLIENT_SECRET", "")
     if url.startswith("https://api.github.com/"):
         h["Accept"] = "application/vnd.github+json"
-        if GH: h["Authorization"] = "Bearer " + GH
+        if token or GH: h["Authorization"] = "Bearer " + (token or GH)
     req = urllib.request.Request(url, headers=h)
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -91,15 +91,16 @@ def workflows(c):
     """Datenläufe eines Repos: Alarm, wenn der jüngste abgeschlossene Lauf eines Workflows gescheitert ist.
     Bei häufig laufenden Workflows (Abstand unter 2 Stunden) erst nach zwei Fehlschlägen in Folge."""
     api = f"https://api.github.com/repos/{c['repo']}/actions"
+    tok = os.environ.get(c["token_env"], "") if c.get("token_env") else GH
     since = (NOW - dt.timedelta(days=7)).strftime("%Y-%m-%d")
-    _, body, _, _ = fetch(f"{api}/runs?status=failure&per_page=50&created=%3E{since}", timeout=30, limit=20_000_000)
+    _, body, _, _ = fetch(f"{api}/runs?status=failure&per_page=50&created=%3E{since}", timeout=30, limit=20_000_000, token=tok)
     seen = {}
     for r in json.loads(body).get("workflow_runs", []):
         if r.get("event") != "pull_request": seen.setdefault(r["workflow_id"], r.get("name") or "?")
     bad_c = ("failure", "timed_out", "startup_failure")
     bad = []
     for wid, name in list(seen.items())[:12]:
-        _, b, _, _ = fetch(f"{api}/workflows/{wid}/runs?status=completed&per_page=2", timeout=30, limit=5_000_000)
+        _, b, _, _ = fetch(f"{api}/workflows/{wid}/runs?status=completed&per_page=2", timeout=30, limit=5_000_000, token=tok)
         last = json.loads(b).get("workflow_runs", [])
         if not last or last[0].get("conclusion") not in bad_c: continue
         rare = len(last) < 2 or (when(last[0]["created_at"]) - when(last[1]["created_at"])).total_seconds() > 7200
@@ -120,12 +121,18 @@ def domain(c):
 def once(kind, c):
     """Gibt (ok, detail) zurück."""
     if kind == "workflows":
-        if not GH: return True, "übersprungen (kein GitHub-Token)"
+        if not (os.environ.get(c["token_env"]) if c.get("token_env") else GH): return True, "übersprungen (kein GitHub-Token)"
         return workflows(c)
     if kind == "domain": return domain(c)
     if kind == "dep" and c["url"] == "telegram:getMe":
         if not TOKEN: return True, "übersprungen (kein Token)"
         r = tg("getMe"); return bool(r.get("ok")), "Bot erreichbar" if r.get("ok") else str(r)
+    if kind == "dep" and c["url"].startswith("telegram:getChat:"):
+        cid = os.environ.get(c["url"].split(":", 2)[2], "")
+        if not (TOKEN and cid): return True, "übersprungen (keine Chat-ID hinterlegt)"
+        try: ok = bool(tg("getChat", chat_id=cid).get("ok"))
+        except urllib.error.HTTPError: ok = False
+        return ok, "Kanal erreichbar" if ok else "Bot hat keinen Zugriff auf den Kanal"
     if c.get("access") and not os.environ.get("CF_ACCESS_CLIENT_ID"):
         return True, "übersprungen (kein Access-Token hinterlegt)"
     status, body, ms, final = fetch(c["url"], access=bool(c.get("access")), limit=2_000 if kind == "dep" else 5_000_000)
@@ -199,7 +206,11 @@ def probe():
     for u in os.environ.get("PROBE_URLS", "").split():
         try:
             status, body, ms, final = fetch(u, limit=3_000_000)
-            print(f"\n=== {status} · {ms} ms · {len(body)} Bytes · {u}\n" + body[:700].decode("utf-8", "replace") + "\n   [...]\n" + body[-300:].decode("utf-8", "replace"))
+            txt = body.decode("utf-8", "replace")
+            print(f"\n=== {status} · {ms} ms · {len(body)} Bytes · {u}\n" + txt[:700] + "\n   [...]\n" + txt[-300:])
+            pat = os.environ.get("PROBE_FIND", "")
+            for m in list(re.finditer(pat, txt))[:12] if pat else []:
+                print("   >>>", " ".join(txt[max(0, m.start() - 260):m.end() + 60].split()))
         except urllib.error.HTTPError as e: print(f"\n=== HTTP {e.code} · {u}")
         except Exception as e: print(f"\n=== {type(e).__name__}: {str(e)[:100]} · {u}")
 
