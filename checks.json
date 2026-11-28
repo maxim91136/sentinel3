@@ -197,7 +197,7 @@
    "name": "Bittensor-Labs DEX",
    "url": "https://bittensor-labs.com/api/dex",
    "field": "_timestamp",
-   "max_hours": 6,
+   "max_hours": 12,
    "used_by": [
     "Bittensor-Labs"
    ]
@@ -206,7 +206,7 @@
    "name": "Bittensor-Labs TAO-Flow",
    "url": "https://bittensor-labs.com/api/alpha_pressure",
    "field": "flow_updated",
-   "max_hours": 4,
+   "max_hours": 12,
    "used_by": [
     "Bittensor-Labs"
    ]
