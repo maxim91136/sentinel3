@@ -13,12 +13,12 @@
    "since": "2026-11-28T09:49Z",
    "last_alert": "2026-11-28T09:49Z",
    "detail": "Daten 7 h alt",
-   "ok_streak": 0,
+   "ok_streak": 1,
    "low": false,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T10:26Z",
+ "last_full": "2026-11-28T10:50Z",
  "last_daily": "2026-11-28",
  "status_msg": 40
 }
