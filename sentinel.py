@@ -17,6 +17,14 @@ NOW = dt.datetime.now(dt.timezone.utc)
 STATE_F = "state.json"
 REMIND_H = 6
 SEND_FAILED = False
+PRIVATE = {}  # Namen aus privaten Repos: nur in Telegram-Meldungen, nie in state.json oder im (öffentlichen) Protokoll
+
+def shown(n, d):
+    return d + (f" ({html.escape(PRIVATE[n], quote=False)})" if n in PRIVATE else "")
+
+def scrub(t):
+    for v in PRIVATE.values(): t = t.replace(html.escape(v, quote=False), "…")
+    return t
 
 def fill(url):
     """Platzhalter in URLs: {Y} Jahr, {D1}/{D2} Datum gestern/vorgestern (JJJJ-MM-TT), {W1}/{W2} dasselbe als JJJJMMTT."""
@@ -49,13 +57,13 @@ def tg(method, **kw):
 def send(text):
     global SEND_FAILED
     if not (TOKEN and CHAT):
-        print("Telegram nicht eingerichtet, Nachricht wäre:\n" + text); return
+        print("Telegram nicht eingerichtet, Nachricht wäre:\n" + scrub(text)); return
     if len(text) > 3900: text = text[:3900].rsplit("\n", 1)[0] + "\n… (gekürzt, Rest im Lauf-Protokoll)"
     for c in [c.strip() for c in CHAT.split(",") if c.strip()]:
         try: tg("sendMessage", chat_id=c, text=text, parse_mode="HTML", disable_web_page_preview="true")
         except Exception as e:
             SEND_FAILED = True
-            print("Senden fehlgeschlagen:", type(e).__name__, "- Nachricht wäre:\n" + text)
+            print("Senden fehlgeschlagen:", type(e).__name__, "- Nachricht wäre:\n" + scrub(text))
 
 def when(x):
     """Zeitstempel lesen: ISO-Text oder Unix-Zeit (Sekunden oder Millisekunden)."""
@@ -106,7 +114,11 @@ def workflows(c):
         if not last or last[0].get("conclusion") not in bad_c: continue
         rare = len(last) < 2 or (when(last[0]["created_at"]) - when(last[1]["created_at"])).total_seconds() > 7200
         if rare or last[1].get("conclusion") in bad_c: bad.append(name)
-    if bad: return False, "gescheitert: " + ", ".join(sorted(bad))
+    if bad:
+        if c.get("hide_names"):
+            PRIVATE[c["name"]] = ", ".join(sorted(bad))
+            return False, f"{len(bad)} gescheitert"
+        return False, "gescheitert: " + ", ".join(sorted(bad))
     return True, "Läufe in Ordnung"
 
 def domain(c):
@@ -188,9 +200,9 @@ def morning(res, fail, old, loc, limits):
     head = "🟢 Alles Wichtige läuft" if not main_f else f"🔴 {len(main_f)} Problem(e)"
     t = f"🛡️ <b>Sentinel3: Morgenreport</b> · {loc.strftime('%d.%m.%Y')}\n\n{head}: {ok_n} von {len(res)} Prüfungen ok"
     if main_f:
-        t += "\n\n" + "\n".join(f"🔴 <b>{n}</b>: {d}{since(old, n)}\n   betrifft: {', '.join(ub)}" for n, (d, ub, _) in main_f.items())
+        t += "\n\n" + "\n".join(f"🔴 <b>{n}</b>: {shown(n, d)}{since(old, n)}\n   betrifft: {', '.join(ub)}" for n, (d, ub, _) in main_f.items())
     if side_f:
-        t += "\n\n<b>Nebenquellen gestört</b>\n" + "\n".join(f"🟡 {n}: {d}{since(old, n)} · {', '.join(ub)}" for n, (d, ub, _) in side_f.items())
+        t += "\n\n<b>Nebenquellen gestört</b>\n" + "\n".join(f"🟡 {n}: {shown(n, d)}{since(old, n)} · {', '.join(ub)}" for n, (d, ub, _) in side_f.items())
     ages = [(n, int(d.split()[1])) for n, ok, d, _, _ in res if ok and d.startswith(("Daten", "Stand"))]
     aging = [f"• {n}: {h} h alt (Grenze {limits[n]} h)" for n, h in ages if n in limits and h > limits[n] / 2]  # nur was sich der Grenze nähert
     if ages:
@@ -217,10 +229,16 @@ def probe():
 
 def main():
     if MODE == "setup":
-        r = tg("getUpdates")
-        ids = {f'{m["chat"]["id"]} ({m["chat"].get("type")}{": " + (m["chat"].get("title") or m["chat"].get("username") or "") })'
-               for u in r.get("result", []) for m in [u.get("message") or u.get("channel_post") or {}] if m.get("chat")}
-        print("Chat-IDs (vorher dem Bot privat eine Nachricht schreiben):"); [print(" ", i) for i in sorted(ids)] or print("  keine gefunden"); return
+        # Chat-IDs nicht ins (öffentliche) Protokoll schreiben, sondern dem jeweiligen Chat per Telegram nennen
+        seen = {}
+        for u in tg("getUpdates").get("result", []):
+            m = u.get("message") or u.get("channel_post") or {}
+            if m.get("chat"): seen[m["chat"]["id"]] = 1
+        for cid in seen:
+            try: tg("sendMessage", chat_id=cid, text=f"🛡️ Sentinel3: Die Chat-ID dieses Chats ist {cid}")
+            except Exception as e: print("Antwort an einen Chat fehlgeschlagen:", type(e).__name__)
+        print(f"{len(seen)} Chat(s) gefunden, die ID steht dort in der Telegram-Antwort." if seen else "Keine Chats gefunden (dem Bot vorher privat eine Nachricht schreiben).")
+        return
     if MODE == "test":
         send("🛡️ <b>Sentinel3</b>: Testnachricht. Wenn du das liest, kommen Meldungen an."); return
     if MODE == "probe":
@@ -253,7 +271,7 @@ def main():
     gone = [n for n, k in recovering.items() if k >= 2 and not old[n].get("low")]
     hold = {n: k for n, k in recovering.items() if k < 2}
     if new:
-        lines = [f"🔴 <b>{n}</b>: {fail[n][0]}\n   betrifft: {', '.join(fail[n][1])}" for n in new]
+        lines = [f"🔴 <b>{n}</b>: {shown(n, fail[n][0])}\n   betrifft: {', '.join(fail[n][1])}" for n in new]
         msgs.append("🛡️ <b>Sentinel3: Problem</b>\n\n" + "\n".join(lines) + "\n\nIch prüfe ab jetzt stündlich.")
     nf = {}
     for n, (det, ub, low) in fail.items():
@@ -269,7 +287,7 @@ def main():
     remind = [] if quiet else [n for n in fail if n in old and not fail[n][2] and not old[n].get("reminded") and hrs(when(old[n]["last_alert"]), NOW) >= REMIND_H]
     for n in remind: nf[n]["reminded"] = True
     if remind and not report_due:  # steht ohnehin im Morgenreport, wenn der im selben Lauf kommt
-        lines = [f"🟠 <b>{n}</b> weiterhin gestört seit {berlin(when(old[n]['since']))} Uhr: {fail[n][0]}" for n in remind]
+        lines = [f"🟠 <b>{n}</b> weiterhin gestört seit {berlin(when(old[n]['since']))} Uhr: {shown(n, fail[n][0])}" for n in remind]
         msgs.append("🛡️ <b>Sentinel3: Erinnerung</b>\n\n" + "\n".join(lines) + "\n\nAb jetzt steht das nur noch im Morgenreport, bis es wieder läuft.")
     for n in new + remind: nf[n]["last_alert"] = ts()
 
@@ -278,7 +296,7 @@ def main():
         msgs.append(morning(res, fail, old, loc, {c["name"]: c["max_hours"] for c in cfg.get("fresh", [])})); new_state["last_daily"] = day
     if MANUAL and not msgs:
         txt = f"🛡️ <b>Sentinel3: Manuelle Prüfung</b>\n\n✅ {len(res) - len(fail)} von {len(res)} in Ordnung"
-        if fail: txt += "\n" + "\n".join(("🟡" if low else "🔴") + f" <b>{n}</b>: {d}{since(old, n)}" for n, (d, _, low) in fail.items())
+        if fail: txt += "\n" + "\n".join(("🟡" if low else "🔴") + f" <b>{n}</b>: {shown(n, d)}{since(old, n)}" for n, (d, _, low) in fail.items())
         msgs.append(txt)
     for m in msgs: send(m)
     if SEND_FAILED:
