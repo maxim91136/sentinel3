@@ -1,24 +1,24 @@
 {
- "mode": "normal",
+ "mode": "problem",
  "failing": {
+  "Bittensor-Labs Kurs (Taostats)": {
+   "since": "2026-11-28T15:07Z",
+   "last_alert": "2026-11-28T15:07Z",
+   "detail": "Daten 8 h alt",
+   "ok_streak": 0,
+   "low": false,
+   "reminded": false
+  },
   "Stooq": {
    "since": "2026-11-28T12:01Z",
    "last_alert": "2026-11-28T12:01Z",
    "detail": "keine Antwort (Zeitüberschreitung)",
-   "ok_streak": 0,
-   "low": true,
-   "reminded": false
-  },
-  "NoSinglePoint Bitcoin-Zahlen aktuell": {
-   "since": "2026-11-27T15:26Z",
-   "last_alert": "2026-11-27T15:26Z",
-   "detail": "zeigt übernommene Bitcoin-Zahlen vom Vortag (Bitnodes liefert nicht)",
    "ok_streak": 1,
    "low": true,
    "reminded": false
   }
  },
- "last_full": "2026-11-28T12:01Z",
+ "last_full": "2026-11-28T15:07Z",
  "last_daily": "2026-11-28",
  "status_msg": 40
 }
